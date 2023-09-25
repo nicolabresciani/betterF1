@@ -13,4 +13,4 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 - gestione delle quote(poter modificare le quote delle scommesse in base alla simulazione) //pensare a come modificare le quote
 - simulazione della gara
 - far vedere i risulati della simulazione
--
+
