@@ -14,3 +14,4 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 - simulazione della gara
 - far vedere i risulati della simulazione
 
+https://www.figma.com/file/b57SL7CJmJw4aP5jxUB6Uh/Untitled?type=design&node-id=1%3A7&mode=design&t=0iCDRbLL9y5yKsQn-1
