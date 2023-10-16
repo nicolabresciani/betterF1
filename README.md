@@ -14,4 +14,4 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 - simulazione della gara
 - far vedere i risulati della simulazione
 
-https://app.creately.com/d/z5yEZSXlUGu/edit
+[https://app.creately.com/d/z5yEZSXlUGu/edit](https://app.creately.com/d/z5yEZSXlUGu/edit)https://app.creately.com/d/z5yEZSXlUGu/edit
