@@ -28,6 +28,6 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
  - Corrisponde("Scomessa_Id", "Quota_Id")
 
 
-immagine login
+## immagine login
 https://www.figma.com/file/b57SL7CJmJw4aP5jxUB6Uh/Untitled?type=design&node-id=1%3A7&mode=design&t=qWkPDgJFIFG2SPJi-1
 
