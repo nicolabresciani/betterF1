@@ -17,6 +17,13 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 schema e/r
 [https://app.creately.com/d/z5yEZSXlUGu/edit](https://app.creately.com/d/z5yEZSXlUGu/edit)https://app.creately.com/d/z5yEZSXlUGu/edit
 
+![Uploading image.png…]()
+
+
+schema relazionale
+utente("Username", Nome, Cognome, Password, DataDiNascita,LuogoNascita,Cellulare,Mail, Portafoglio_Username)
+Portafoglio("Username",StoricoTransizioni,Stato,Saldo)
+
 immagine login
 https://www.figma.com/file/b57SL7CJmJw4aP5jxUB6Uh/Untitled?type=design&node-id=1%3A7&mode=design&t=qWkPDgJFIFG2SPJi-1
 
