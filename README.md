@@ -20,12 +20,12 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 
 
 ## schema relazionale
- - Utente(<u>Username<u>, Nome, Cognome, Password, DataDiNascita,LuogoNascita,Cellulare,Mail, Portafoglio_Username)
- - Portafoglio("Username",StoricoTransizioni,Stato,Saldo)
- - Scommessa("Id", ImportoScommesso, ImportoVinto,StatoScomessa,Data,Utente_Username,Gara_Id)
- - Gara("Id",Risultato,Stato,LuogoDiSvolta)
- - Quota("Id",Valore,Stato,Gara_Id)
- - Corrisponde("Scomessa_Id", "Quota_Id")
+ - Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita,LuogoNascita,Cellulare,Mail, Portafoglio_Username)
+ - Portafoglio(<ins>Username</ins>,StoricoTransizioni,Stato,Saldo)
+ - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto,StatoScomessa,Data,Utente_Username,Gara_Id)
+ - Gara(<ins>Id</ins>,Risultato,Stato,LuogoDiSvolta)
+ - Quota(<ins>Id</ins>,Valore,Stato,Gara_Id)
+ - Corrisponde(<ins>Scomessa_Id</ins>, "Quota_Id")
 
 
 ## immagine Idea progetto
