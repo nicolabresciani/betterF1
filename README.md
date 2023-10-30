@@ -15,7 +15,8 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 - far vedere i risulati della simulazione
 
 ## schema e/r
-[https://app.creately.com/d/z5yEZSXlUGu/edit](https://app.creately.com/d/z5yEZSXlUGu/edit)https://app.creately.com/d/z5yEZSXlUGu/edit
+![Screenshot 2023-10-30 121318](https://github.com/nicolabresciani/betterF1/assets/101709282/f5f7789b-c040-4716-be11-6becd4a92ea4)
+
 
 
 
