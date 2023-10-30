@@ -29,8 +29,8 @@ target: centri scommesse di piccole dimensioni
 
 
 ## immagine Idea progetto
-
-![Screenshot 2023-10-30 120900](https://github.com/nicolabresciani/betterF1/assets/101709282/cca38373-e7b8-4f6c-86ba-9b8300813c21)
-![Screenshot 2023-10-30 120921](https://github.com/nicolabresciani/betterF1/assets/101709282/f58d0515-d352-4f97-ae74-03e3264ae6a1)
-![Screenshot 2023-10-30 120940](https://github.com/nicolabresciani/betterF1/assets/101709282/e7c852b6-d424-4a84-a4da-c48dbccdb06e)
-![Screenshot 2023-10-30 120955](https://github.com/nicolabresciani/betterF1/assets/101709282/5b039b06-2973-4812-b1b2-109cf659649d)
+![Screenshot 2023-10-30 124605](https://github.com/nicolabresciani/betterF1/assets/101709282/c4a65f3f-4bbc-495b-aa68-a6455c455e50)
+![Screenshot 2023-10-30 124650](https://github.com/nicolabresciani/betterF1/assets/101709282/9276a2b4-d547-4f94-8f66-5360d9b1b2c4)
+![Screenshot 2023-10-30 124736](https://github.com/nicolabresciani/betterF1/assets/101709282/659aa23f-dda3-4ff1-9199-2db008fa4a90)
+![Screenshot 2023-10-30 125728](https://github.com/nicolabresciani/betterF1/assets/101709282/7129b54e-0136-45f8-a05a-c8bdd7cae0c9)
+![Screenshot 2023-10-30 125753](https://github.com/nicolabresciani/betterF1/assets/101709282/eaea51d6-bb07-4d17-ad48-70b2275489dc)
