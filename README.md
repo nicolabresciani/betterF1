@@ -14,7 +14,8 @@ target: centri scommesse di piccole dimensioni
 - far vedere i risulati della simulazione
 
 ## schema e/r
-![Screenshot 2023-10-30 121318](https://github.com/nicolabresciani/betterF1/assets/101709282/f5f7789b-c040-4716-be11-6becd4a92ea4)
+![Screenshot 2023-10-30 132546](https://github.com/nicolabresciani/betterF1/assets/101709282/aa58f256-7ac6-43fd-a940-da152f4aa990)
+
 
 
 
