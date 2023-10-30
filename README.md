@@ -12,7 +12,7 @@ target: centri scommesse di piccole dimensioni
 - poter far scommettere gli utenti
 - gestione delle scommesse (poter annullare le scommesse, visualizzarle)
 - calcolo delle quote
-- gestione delle quote(poter modificare le quote delle scommesse in base alla simulazione) //pensare a come modificare le quote
+- gestione delle quote(poter modificare le quote delle scommesse in base alla simulazione)
 - simulazione della gara
 - far vedere i risulati della simulazione
 
