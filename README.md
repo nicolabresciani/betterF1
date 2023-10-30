@@ -11,8 +11,6 @@ target: centri scommesse di piccole dimensioni
 - avere un portafoglio virtuale e caricare i soldi
 - poter far scommettere gli utenti
 - gestione delle scommesse (poter annullare le scommesse, visualizzarle)
-- calcolo delle quote
-- gestione delle quote(poter modificare le quote delle scommesse in base alla simulazione)
 - simulazione della gara
 - far vedere i risulati della simulazione
 
