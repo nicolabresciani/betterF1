@@ -1,6 +1,7 @@
 # betterF1
 
 problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
+target: centri scommesse di piccole dimensioni
 
 ## funzionalità:
 - registrare un utente ( username, password, mail, cell) e (nome, cognome, luogo di nascita, anno di nascita)
