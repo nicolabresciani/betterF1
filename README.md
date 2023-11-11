@@ -31,9 +31,69 @@ target: centri scommesse di piccole dimensioni
  - Corrisponde(<ins>Scomessa_Id</ins>, "Quota_Id")
 
 
+
+
 ## immagine Idea progetto
 ![Screenshot 2023-10-30 124605](https://github.com/nicolabresciani/betterF1/assets/101709282/c4a65f3f-4bbc-495b-aa68-a6455c455e50)
 ![Screenshot 2023-10-30 124650](https://github.com/nicolabresciani/betterF1/assets/101709282/9276a2b4-d547-4f94-8f66-5360d9b1b2c4)
 ![Screenshot 2023-10-30 124736](https://github.com/nicolabresciani/betterF1/assets/101709282/659aa23f-dda3-4ff1-9199-2db008fa4a90)
 ![Screenshot 2023-10-30 125728](https://github.com/nicolabresciani/betterF1/assets/101709282/7129b54e-0136-45f8-a05a-c8bdd7cae0c9)
 ![Screenshot 2023-10-30 125753](https://github.com/nicolabresciani/betterF1/assets/101709282/eaea51d6-bb07-4d17-ad48-70b2275489dc)
+
+
+
+
+
+
+## pagina login
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form action="authentication.php" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+
+## autotentificazione
+[Uploading authenticati<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verifica se l'input è stato inviato correttamente
+    if (isset($_POST['username'])) {
+        $username = $_POST['username'];
+        
+        // Genera un numero casuale
+        $randomNumber = rand(1, 100);
+        
+        // Verifica se il numero è pari
+        if ($randomNumber % 2 === 0) {
+            // Se è pari, mostra la pagina con il nome dell'utente
+            header("Location: userpage.php?username=" . urlencode($username));
+        } else {
+            // Se è dispari, reindirizza alla pagina di login
+            header("Location: login.php");
+        }
+    }
+}
+?>
+on.php…]()
+## userpage
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['username'])) {
+    $username = $_GET['username'];
+    
+    // Mostra il nome dell'utente
+    echo "<h2>Benvenuto, $username!</h2>";
+} else {
+    // Se l'accesso non è autorizzato, reindirizza alla pagina di login
+    header("Location: login.php");
+}
+?>
