@@ -46,6 +46,7 @@ target: centri scommesse di piccole dimensioni
 
 
 ## pagina login
+"
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,9 +63,9 @@ target: centri scommesse di piccole dimensioni
     </form>
 </body>
 </html>
-
+"
 ## autotentificazione
-[Uploading authenticati<?php
+?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verifica se l'input è stato inviato correttamente
     if (isset($_POST['username'])) {
@@ -84,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-on.php…]()
 ## userpage
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['username'])) {
