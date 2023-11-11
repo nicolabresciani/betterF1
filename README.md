@@ -46,7 +46,7 @@ target: centri scommesse di piccole dimensioni
 
 
 ## pagina login
-"
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,23 +63,18 @@ target: centri scommesse di piccole dimensioni
     </form>
 </body>
 </html>
-"
+
 ## autotentificazione
 ?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verifica se l'input è stato inviato correttamente
     if (isset($_POST['username'])) {
         $username = $_POST['username'];
         
-        // Genera un numero casuale
         $randomNumber = rand(1, 100);
         
-        // Verifica se il numero è pari
         if ($randomNumber % 2 === 0) {
-            // Se è pari, mostra la pagina con il nome dell'utente
             header("Location: userpage.php?username=" . urlencode($username));
         } else {
-            // Se è dispari, reindirizza alla pagina di login
             header("Location: login.php");
         }
     }
@@ -90,10 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['username'])) {
     $username = $_GET['username'];
     
-    // Mostra il nome dell'utente
     echo "<h2>Benvenuto, $username!</h2>";
 } else {
-    // Se l'accesso non è autorizzato, reindirizza alla pagina di login
     header("Location: login.php");
 }
 ?>
