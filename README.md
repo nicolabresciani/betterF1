@@ -41,15 +41,10 @@ target: centri scommesse di piccole dimensioni
 ![Screenshot 2023-10-30 125753](https://github.com/nicolabresciani/betterF1/assets/101709282/eaea51d6-bb07-4d17-ad48-70b2275489dc)
 
 
-
-
-
-
 ## pagina login
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
 </head>
 <body>
     <h2>Login</h2>
