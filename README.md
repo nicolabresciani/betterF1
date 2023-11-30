@@ -30,7 +30,7 @@ target: centri scommesse di piccole dimensioni
  - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Portafoglio_Username, Gara_id)
  - Quota(<ins>Id</ins>, Valore, Stato, Gara_Id)
  - ScommessaQuota(<ins>Scommessa_Id</ins>, <ins>Quota_Id</ins>)
- - Gara(Id, Risultato, Stato, LuogoDiSvolta)
+ - Gara(<ins>Id</ins>, Risultato, Stato, LuogoDiSvolta)
 
 
 
