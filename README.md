@@ -54,6 +54,7 @@ CREATE TABLE Portafoglio (
     Stato VARCHAR(255),
     Saldo DECIMAL(10, 2)
 );
+
 CREATE TABLE Prelievo (
     Id INT PRIMARY KEY,
     data DATE,
@@ -61,12 +62,14 @@ CREATE TABLE Prelievo (
     Portafoglio_Username VARCHAR(255),
     FOREIGN KEY (Portafoglio_Username) REFERENCES Portafoglio(Username)
 );
+
 CREATE TABLE Gara (
     Id INT PRIMARY KEY,
     Risultato VARCHAR(255),
     Stato VARCHAR(255),
     LuogoDiSvolta VARCHAR(255)
 );
+
 -- ImportoScommesso DECIMAL(10, 2) =  a 10 cifre memorizzate in totale e due cifre memorizzzte dopo la virgola ex: 99999999.99
 CREATE TABLE Scommessa (
     Id INT PRIMARY KEY,
