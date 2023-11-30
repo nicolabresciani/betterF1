@@ -27,7 +27,7 @@ target: centri scommesse di piccole dimensioni
  - Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita,LuogoNascita,Cellulare,Mail, Portafoglio_Username)
  - Portafoglio(<ins>Username</ins>, Stato,Saldo)
  - Prelievo(<ins>Id</ins>, data, importo, Portafoglio_Username);
- - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Portafoglio_Username, Gara_id)
+ - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Gara_id)
  - Quota(<ins>Id</ins>, Valore, Stato, Gara_Id)
  - ScommessaQuota(<ins>Scommessa_Id</ins>, <ins>Quota_Id</ins>)
  - Gara(<ins>Id</ins>, Risultato, Stato, LuogoDiSvolta)
