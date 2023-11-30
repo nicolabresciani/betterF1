@@ -16,7 +16,8 @@ target: centri scommesse di piccole dimensioni
 
 
 ## schema e/r
-![Screenshot 2023-10-30 132546](https://github.com/nicolabresciani/betterF1/assets/101709282/aa58f256-7ac6-43fd-a940-da152f4aa990)
+![schemaER](https://github.com/nicolabresciani/betterF1/assets/101709282/d86b432d-ebc2-4017-8e96-78a2adaf5f29)
+
 
 
 
@@ -24,11 +25,13 @@ target: centri scommesse di piccole dimensioni
 
 ## schema relazionale
  - Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita,LuogoNascita,Cellulare,Mail, Portafoglio_Username)
- - Portafoglio(<ins>Username</ins>,StoricoTransizioni,Stato,Saldo)
- - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto,StatoScomessa,Data,Utente_Username,Gara_Id)
- - Gara(<ins>Id</ins>,Risultato,Stato,LuogoDiSvolta)
- - Quota(<ins>Id</ins>,Valore,Stato,Gara_Id)
- - Corrisponde(<ins>Scomessa_Id</ins>, "Quota_Id")
+ - Portafoglio(<ins>Username</ins>, Stato,Saldo)
+ - Prelievo(<ins>Id</ins>, data, importo, Portafoglio_Username);
+ - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Portafoglio_Username, Gara_id)
+ - Quota(<ins>Id</ins>, Valore, Stato, Gara_Id)
+ - ScommessaQuota(<ins>Scommessa_Id</ins>, <ins>Quota_Id</ins>)
+ - Gara(Id, Risultato, Stato, LuogoDiSvolta)
+
 
 
 
