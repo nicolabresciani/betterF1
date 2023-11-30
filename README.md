@@ -33,7 +33,68 @@ target: centri scommesse di piccole dimensioni
  - Gara(<ins>Id</ins>, Risultato, Stato, LuogoDiSvolta)
 
 
+## query creazione daabase
+CREATE DATABASE betterf1;
 
+CREATE TABLE Utente (
+    Username VARCHAR(255) PRIMARY KEY,
+    Nome VARCHAR(255),
+    Cognome VARCHAR(255),
+    Password VARCHAR(255),
+    DataDiNascita DATE,
+    LuogoNascita VARCHAR(255),
+    Cellulare VARCHAR(255),
+    Mail VARCHAR(255),
+    Portafoglio_Username VARCHAR(255),
+    FOREIGN KEY (Portafoglio_Username) REFERENCES Portafoglio(Username)
+);
+
+CREATE TABLE Portafoglio (
+    Username VARCHAR(255) PRIMARY KEY,
+    Stato VARCHAR(255),
+    Saldo DECIMAL(10, 2)
+);
+CREATE TABLE Prelievo (
+    Id INT PRIMARY KEY,
+    data DATE,
+    importo DECIMAL(10, 2),
+    Portafoglio_Username VARCHAR(255),
+    FOREIGN KEY (Portafoglio_Username) REFERENCES Portafoglio(Username)
+);
+CREATE TABLE Gara (
+    Id INT PRIMARY KEY,
+    Risultato VARCHAR(255),
+    Stato VARCHAR(255),
+    LuogoDiSvolta VARCHAR(255)
+);
+-- ImportoScommesso DECIMAL(10, 2) =  a 10 cifre memorizzate in totale e due cifre memorizzzte dopo la virgola ex: 99999999.99
+CREATE TABLE Scommessa (
+    Id INT PRIMARY KEY,
+    ImportoScommesso DECIMAL(10, 2),
+    ImportoVinto DECIMAL(10, 2),
+    StatoScommessa VARCHAR(255),
+    Data DATE,
+    Utente_Username VARCHAR(255),
+    Gara_id INT,
+    FOREIGN KEY (Utente_Username) REFERENCES Utente(Username),
+    FOREIGN KEY (Gara_id) REFERENCES Gara(Id)
+);
+
+CREATE TABLE Quota (
+    Id INT PRIMARY KEY,
+    Valore DECIMAL(10, 2),
+    Stato VARCHAR(255),
+    Gara_Id INT,
+    FOREIGN KEY (Gara_Id) REFERENCES Gara(Id)
+);
+
+CREATE TABLE ScommessaQuota (
+    Scommessa_Id INT,
+    Quota_Id INT,
+    PRIMARY KEY (Scommessa_Id, Quota_Id),
+    FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id),
+    FOREIGN KEY (Quota_Id) REFERENCES Quota(Id)
+);
 
 
 ## immagine Idea progetto
