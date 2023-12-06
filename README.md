@@ -38,9 +38,11 @@ target: centri scommesse di piccole dimensioni
 
 ## query creazione daabase
 -- Creazione del database
+
 CREATE DATABASE betterF1
 
 -- Creazione della tabella Amministratore
+
 CREATE TABLE Amministratore (
     Username VARCHAR(255) PRIMARY KEY,
     Nome VARCHAR(255),
@@ -50,6 +52,7 @@ CREATE TABLE Amministratore (
 );
 
 -- Creazione della tabella SottoAmministratore con il vincolo di chiave esterna
+
 CREATE TABLE SottoAmministratore (
     Username VARCHAR(255) PRIMARY KEY,
     Nome VARCHAR(255),
@@ -61,6 +64,7 @@ CREATE TABLE SottoAmministratore (
 );
 
 -- Creazione della tabella Utente
+
 CREATE TABLE Utente (
     Username VARCHAR(255) PRIMARY KEY,
     Nome VARCHAR(255),
@@ -75,6 +79,7 @@ CREATE TABLE Utente (
 );
 
 -- Creazione della tabella Portafoglio
+
 CREATE TABLE Portafoglio (
     Username VARCHAR(255) PRIMARY KEY,
     Stato VARCHAR(255),
@@ -82,6 +87,7 @@ CREATE TABLE Portafoglio (
 );
 
 -- Creazione della tabella Prelievo
+
 CREATE TABLE Prelievo (
     Id INT PRIMARY KEY,
     Data DATE,
@@ -91,6 +97,7 @@ CREATE TABLE Prelievo (
 );
 
 -- Creazione della tabella Scommessa con i relativi vincoli di chiavi esterne
+
 CREATE TABLE Scommessa (
     Id INT PRIMARY KEY,
     ImportoScommesso DECIMAL(10, 2),
@@ -106,6 +113,7 @@ CREATE TABLE Scommessa (
 );
 
 -- Creazione della tabella Quota con il vincolo di chiave esterna
+
 CREATE TABLE Quota (
     Id INT PRIMARY KEY,
     Valore DECIMAL(10, 2),
@@ -117,6 +125,7 @@ CREATE TABLE Quota (
 );
 
 -- Creazione della tabella ScommessaQuota con i relativi vincoli di chiavi esterne
+
 CREATE TABLE ScommessaQuota (
     Scommessa_Id INT,
     Quota_Id INT,
@@ -126,6 +135,7 @@ CREATE TABLE ScommessaQuota (
 );
 
 -- Creazione della tabella Gara
+
 CREATE TABLE Gara (
     Id INT PRIMARY KEY,
     Risultato VARCHAR(255),
