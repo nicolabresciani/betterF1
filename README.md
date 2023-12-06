@@ -16,7 +16,8 @@ target: centri scommesse di piccole dimensioni
 
 
 ## schema e/r
-![schemaER](https://github.com/nicolabresciani/betterF1/assets/101709282/d86b432d-ebc2-4017-8e96-78a2adaf5f29)
+![schemaER](https://github.com/nicolabresciani/betterF1/assets/101709282/4b487ed4-b25f-43f7-a69d-5ae8ff2b4925)
+
 
 
 
@@ -24,13 +25,15 @@ target: centri scommesse di piccole dimensioni
 
 
 ## schema relazionale
- - Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita,LuogoNascita,Cellulare,Mail, Portafoglio_Username)
- - Portafoglio(<ins>Username</ins>, Stato,Saldo)
- - Prelievo(<ins>Id</ins>, data, importo, Portafoglio_Username);
- - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Gara_id)
- - Quota(<ins>Id</ins>, Valore, Stato, Gara_Id)
- - ScommessaQuota(<ins>Scommessa_Id</ins>, <ins>Quota_Id</ins>)
- - Gara(<ins>Id</ins>, Risultato, Stato, LuogoDiSvolta)
+Amministratore(<ins>Username</ins>, Nome, Cognome, Password, Ruolo)
+SottoAmministratore(<ins>Username</ins>, Nome, Cognome, Password, Ruolo, Amministratore_Username)
+Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Portafoglio_Username)
+Portafoglio(<ins>Username</ins>, Stato, Saldo)
+Prelievo(<ins>Id</ins>, Data, Importo, Portafoglio_Username)
+Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Gara_id, Amministratore_Username)
+Quota(<ins>Id</ins>, Valore, Stato, Gara_Id, SottoAmministratore_Username)
+ScommessaQuota(<ins>Scommessa_Id</ins>,<ins>Quota_Id</ins>)
+Gara(<ins>Id</ins>, Risultato, Stato, LuogoDiSvolta, SottoAmministratore_Username)
 
 
 ## query creazione daabase
