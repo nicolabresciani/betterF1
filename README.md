@@ -16,7 +16,8 @@ target: centri scommesse di piccole dimensioni
 
 
 ## schema e/r
-![schemaER](https://github.com/nicolabresciani/betterF1/assets/101709282/4b487ed4-b25f-43f7-a69d-5ae8ff2b4925)
+![schemaER](https://github.com/nicolabresciani/betterF1/assets/101709282/1b4f7bf7-cb14-47b5-aefa-30d2936eb99e)
+
 
 
 
