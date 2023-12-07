@@ -27,7 +27,7 @@ target: centri scommesse di piccole dimensioni
 ## schema relazionale
 - Amministratore(<ins>Username</ins>, Nome, Cognome, Password, Ruolo)
 - SottoAmministratore(<ins>Username</ins>, Nome, Cognome, Password, Ruolo, Amministratore_Username)
-- Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Portafoglio_Username)
+- Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail,Ruolo, Portafoglio_Username)
 - Portafoglio(<ins>Username</ins>, Stato, Saldo)
 - Prelievo(<ins>Id</ins>, Data, Importo, Portafoglio_Username)
 - Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Gara_id, Amministratore_Username)
