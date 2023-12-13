@@ -5,10 +5,10 @@ problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 target: centri scommesse di piccole dimensioni
 
 ## funzionalità:
-- Gli utenti possono registrarsi fornendo le informazioni richieste ( username, password, mail, cell) e (nome, cognome, luogo di nascita, anno di nascita)
-- Gli utenti possono accedere utilizzando le loro credenzial (username e password)
-- Gli utenti possono recuperare credenziali (password) oppure recupero credenziali (username) oppure entrambe
-- Gli utenti possono effettuare transazioni di deposito e prelievo nel loro portafoglio virtuale
+- Gli utenti possono registrarsi fornendo le informazioni richieste ( username, password, mail, cell) e (nome, cognome, luogo di nascita, anno di nascita)    "(svolto)"
+- Gli utenti possono accedere utilizzando le loro credenzial (username e password)    "(svolto)"
+- Gli utenti possono recuperare credenziali (password) oppure recupero credenziali (username) oppure entrambe    "(ci sto lavorando)"
+- Gli utenti possono effettuare transazioni di deposito e prelievo nel loro portafoglio virtuale    "(ci sto lavorando)"
 - Gli utenti possono effettuare scommesse sulla Formula 1.
 - gestione delle scommesse (poter annullare le scommesse, visualizzarle)
 - Gli amministratori possono gestire le quote per le varie gare di Formula 1.
