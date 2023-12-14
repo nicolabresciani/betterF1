@@ -17,14 +17,22 @@ target: centri scommesse di piccole dimensioni
 
 ## come far partire il progetto
 -step1: accedere al codespaces online
+
 -step2: verifica che sia installata l'estensione docker, se non fosse installata installarla
+
 step3: incollare il seguente link nel terminale e aspettare che finisca di installare le estensioni docker run --name myXampp -p 41061:22 -p 41062:80 -d -v /workspaces/betterF1:/www tomsik68/xampp:8
+
 step4: aprire l'estensione docker, aprire la sezione CONTAINERS, aprire l'eventuale se presente Individual Containers, e far partire il tutto cliccando con il tasto destro del mouse start su  tomsik68/xampp:8.  possiamo capire che è partito perche prima di tomsik68/xampp:8 apparirà un triangolo verde.se apparirà un traingolo verde cliccare di nuovo con il tasto destro open in browser su tomsik68/xampp:8. invece se apparirà invece un quadrato rosso significa che non è partito, quindi rifare la procedura per farlo partire.
 step5: se clicclando  su open in browser ti apparirà l'immagine di defoult di xampp allora significa che funziona tutto
+
 step6: cliccare su phpMyAdmin
+
 step7: creare il database tramite il file database.sql se non è già presente il database betterF1
+
 step8:dublicare la pagina
+
 step9: andare nell'URL ed eliminare 
+
 
 
 ## schema e/r
