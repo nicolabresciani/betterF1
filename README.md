@@ -1,4 +1,4 @@
-#pa- betterF1
+# betterF1
 
 problema: gestione delle quote e delle scommesse sulla f1 (ispirato alla better)
 
