@@ -31,7 +31,10 @@ step7: creare il database tramite il file database.sql se non è già presente i
 
 step8:dublicare la pagina
 
-step9: andare nell'URL ed eliminare 
+step9: andare nell'URL ed cambiare /phpmyadmin/ con /www/
+
+step10: appariranno tanti file, cliccare su Index.php partirà il mio progettino
+
 
 
 
