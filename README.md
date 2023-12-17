@@ -7,7 +7,7 @@ target: centri scommesse di piccole dimensioni
 ## funzionalità:
 - Gli utenti possono registrarsi fornendo le informazioni richieste ( username, password, mail, cell) e (nome, cognome, luogo di nascita, anno di nascita)    "(svolto)"
 - Gli utenti possono accedere utilizzando le loro credenzial (username e password)    "(svolto)"
-- Gli utenti possono recuperare credenziali (password) oppure recupero credenziali (username) oppure entrambe    "(ci sto lavorando)"
+- Gli utenti possono recuperare credenziali (password) oppure recupero credenziali (username)     "(svolto)"
 - Gli utenti possono effettuare transazioni di deposito e prelievo nel loro portafoglio virtuale    "(ci sto lavorando)"
 - Gli utenti possono effettuare scommesse sulla Formula 1.
 - gestione delle scommesse (poter annullare le scommesse, visualizzarle)
