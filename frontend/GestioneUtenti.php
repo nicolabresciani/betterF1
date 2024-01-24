@@ -1,9 +1,9 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Gestione Utenti</title> 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Utenti</title>
     <style>
         body {
             margin: 0;
@@ -40,7 +40,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-right: 5px; 
+            margin-right: 5px;
             float: right;
         }
 
@@ -55,6 +55,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin: 30px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -70,16 +71,42 @@
         th {
             background-color: #f2f2f2;
         }
+
+        label {
+            margin-right: 10px;
+        }
+
+        #searchInput {
+            width: 246px;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .deleteButton {
+            background-color: red;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .deleteButton:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 <body>
     <div class="user-list">
         <!-- Aggiunto il pulsante di ritorno indietro -->
         <button onclick="goBack()">Torna Indietro</button>
-        
+
         <!-- Aggiunto campo di input e pulsante di ricerca -->
-        <label for="searchInput">Cerca per lettera:</label>
-        <input type="text" id="searchInput" oninput="searchUsers()">
+        <label for="searchInput">Cerca:</label>
+        <input type="text" id="searchInput" onkeyup="searchUsers()" placeholder="Cerca per Username, Nome, Cognome...">
         <br>
 
         <h2>Elenco Utenti</h2>
@@ -94,8 +121,86 @@
             function goBack() {
                 window.history.back();
             }
+            var searchTimeout;
 
-            // Funzione per ottenere gli utenti dal server
+            function searchUsers() {
+                clearTimeout(searchTimeout);
+                var input, filter;
+                input = document.getElementById("searchInput");
+                filter = input.value.toUpperCase();
+                
+                // Interrompi l'aggiornamento
+                clearInterval(updateInterval);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "../backend/api_get_users.php?search=" + filter, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var userListContainer = document.getElementById("user-list-container");
+                        var fieldsRow = document.getElementById("fields-row");
+                        var users = JSON.parse(xhr.responseText);
+
+                        // Pulisci la tabella
+                        userListContainer.innerHTML = "";
+                        fieldsRow.innerHTML = "";
+
+                        // Visualizza gli utenti nella lista
+                        users.forEach(function (user, index) {
+                            if (index === 0) {
+                                // Se è il primo utente, crea la riga con i nomi dei campi
+                                for (var field in user) {
+                                    var th = document.createElement("th");
+                                    th.textContent = field;
+                                    fieldsRow.appendChild(th);
+                                }
+                                var thDelete = document.createElement("th");
+                                thDelete.textContent = "Elimina";
+                                fieldsRow.appendChild(thDelete);
+                            }
+
+                            // Crea una riga per ogni utente
+                            var tr = document.createElement("tr");
+                            for (var field in user) {
+                                var td = document.createElement("td");
+                                td.textContent = user[field];
+                                tr.appendChild(td);
+                            }
+
+                            // Aggiungi il pulsante "Elimina"
+                            var tdDelete = document.createElement("td");
+                            var deleteButton = document.createElement("button");
+                            deleteButton.className = "deleteButton";
+                            deleteButton.textContent = "Elimina";
+                            deleteButton.onclick = function() {
+                                // Chiamata alla funzione per eliminare l'utente (con conferma)
+                                var confirmation = confirm("Sei sicuro di voler eliminare l'utente?");
+                                if (confirmation) {
+                                    // Implementa la logica per eliminare l'utente dal database
+                                    deleteUser(user.Username);
+                                    // Rimuovi la riga dalla pagina
+                                    tr.remove();
+                                }
+                            };
+                            tdDelete.appendChild(deleteButton);
+                            tr.appendChild(tdDelete);
+
+                            userListContainer.appendChild(tr);
+                        });
+
+                        // Riprendi l'aggiornamento solo se la barra di ricerca è vuota
+                        if (filter === "") {
+                            searchTimeout = setTimeout(function () {
+                                updateInterval = setInterval(getUsers, 5000);
+                            }, 1000);
+                        }
+                    }
+                };
+                xhr.send();
+            }
+
+            // Aggiornamento ogni 5 secondi
+            var updateInterval = setInterval(getUsers, 5000);
+
             function getUsers() {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", "../backend/api_get_users.php", true);
@@ -118,6 +223,9 @@
                                     th.textContent = field;
                                     fieldsRow.appendChild(th);
                                 }
+                                var thDelete = document.createElement("th");
+                                thDelete.textContent = "Elimina";
+                                fieldsRow.appendChild(thDelete);
                             }
 
                             // Crea una riga per ogni utente
@@ -127,6 +235,25 @@
                                 td.textContent = user[field];
                                 tr.appendChild(td);
                             }
+
+                            // Aggiungi il pulsante "Elimina"
+                            var tdDelete = document.createElement("td");
+                            var deleteButton = document.createElement("button");
+                            deleteButton.className = "deleteButton";
+                            deleteButton.textContent = "Elimina";
+                            deleteButton.onclick = function() {
+                                // Chiamata alla funzione per eliminare l'utente con il suo nome (con conferma)
+                                var confirmation = confirm("Sei sicuro di voler eliminare " + user.Username + "?");
+                                if (confirmation) {
+                                    // Implementa la logica per eliminare l'utente dal database
+                                    deleteUser(user.Username);  // <-- Corrected parameter here
+                                    // Rimuovi la riga dalla pagina
+                                    tr.remove();
+                                }
+                            };
+                            tdDelete.appendChild(deleteButton);
+                            tr.appendChild(tdDelete);
+
                             userListContainer.appendChild(tr);
                         });
                     }
@@ -134,33 +261,19 @@
                 xhr.send();
             }
 
-
-            // Funzione di ricerca
-            function searchUsers() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("searchInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("user-list-container");
-                tr = table.getElementsByTagName("tr");
-
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[1]; // Modifica 1 con l'indice del campo su cui vuoi eseguire la ricerca (Nome)
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
+            // Funzione per eliminare l'utente dal database
+            function deleteUser(username) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../backend/api_delete_user.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response.message);
                     }
-                }
+                };
+                xhr.send("username=" + username);
             }
-
-            // Esegui getUsers ogni 5 secondi (puoi modificare il valore secondo le tue esigenze)
-            setInterval(getUsers, 5000);
-
-            // Chiamata iniziale
-            getUsers();
         </script>
     </div>
 </body>

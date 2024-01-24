@@ -14,8 +14,15 @@ if ($conn->connect_error) {
     die("Connessione fallita: " . $conn->connect_error);
 }
 
-// Query per ottenere tutti gli utenti
-$sql = "SELECT Username, Nome, Cognome, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo FROM Utente";
+// Se c'è un parametro 'search', esegui la query di ricerca
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $sql = "SELECT Username, Nome, Cognome, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo FROM Utente WHERE Username LIKE '%$search%' OR Nome LIKE '%$search%' OR Cognome LIKE '%$search%'";
+} else {
+    // Altrimenti, esegui la query per ottenere tutti gli utenti
+    $sql = "SELECT Username, Nome, Cognome, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo FROM Utente";
+}
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
