@@ -39,5 +39,6 @@ if ($stmt) {
 }
 
 $stmt->close();
+
 $conn->close();
 ?>
