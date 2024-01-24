@@ -32,7 +32,7 @@
         <input type="email" name="mail" required>
         <br>
         <label for="ruolo">Ruolo</label>
-        <input type="ruolo" name="ruolo" maxlength="19" required> 
+        <input type="ruolo" name="ruolo" maxlength="19" required> solo se lo sai sennò metti 0.
         <br>
         <input type="submit" value="Registrati">
     </form>
