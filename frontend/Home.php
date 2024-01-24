@@ -2,12 +2,12 @@
 session_start();
 
 // Connessione al database
-$servename = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "betterF1";
 
-$conn = new mysqli($servename, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Controllo della connessione
 if ($conn->connect_error) {
@@ -26,7 +26,11 @@ $username = $_SESSION["username"];
 $sqlSaldo = "SELECT Saldo FROM Portafoglio WHERE Username = '$username'";
 $resultSaldo = $conn->query($sqlSaldo);
 
-if ($resultSaldo && $resultSaldo->num_rows > 0) {
+if ($resultSaldo === false) {
+    die("Errore nella query: " . $conn->error);
+}
+
+if ($resultSaldo->num_rows > 0) {
     $rowSaldo = $resultSaldo->fetch_assoc();
     $saldoAttuale = $rowSaldo["Saldo"];
 } else {
@@ -41,50 +45,7 @@ if ($resultSaldo && $resultSaldo->num_rows > 0) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <title>Home</title> 
         <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: cursive, sans-serif;
-            }
-
-            header,.header {
-                background-color: blue;
-                padding: 10px;
-                display: flex;
-                color:white;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            h1 {
-                text-align: center;
-            }
-
-            form {
-                text-align: center;
-                margin-top: 20px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            button {
-                background-color: black;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                margin-right: 5px; 
-                float: right; /* aggiunto */
-            }
-            button:hover {
-                background-color: black;
-            }
-
-
-
+            /* Styles here */
         </style>
     </head> 
     <body> 
@@ -106,4 +67,3 @@ if ($resultSaldo && $resultSaldo->num_rows > 0) {
         </header>
     </body>
 </html>
-
