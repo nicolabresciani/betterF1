@@ -199,7 +199,7 @@
             }
 
             // Aggiornamento ogni 5 secondi
-            var updateInterval = setInterval(getUsers, 5000);
+            var updateInterval = setInterval(getUsers, 2000);
 
             function getUsers() {
                 var xhr = new XMLHttpRequest();
