@@ -154,7 +154,7 @@
                                     fieldsRow.appendChild(th);
                                 }
                                 var thDelete = document.createElement("th");
-                                thDelete.textContent = "Elimina";
+                                thDelete.textContent = "visualizza movimenti";
                                 fieldsRow.appendChild(thDelete);
                             }
 
@@ -169,8 +169,8 @@
                             // Aggiungi il pulsante "Elimina"
                             var tdDelete = document.createElement("td");
                             var deleteButton = document.createElement("button");
-                            deleteButton.className = "deleteButton";
-                            deleteButton.textContent = "Elimina";
+                            deleteButton.className = "moveButton";
+                            deleteButton.textContent = "visualizza movimenti";
                             deleteButton.onclick = function() {
                                 // Chiamata alla funzione per eliminare l'utente (con conferma)
                                 var confirmation = confirm("Sei sicuro di voler eliminare l'utente?");
@@ -224,7 +224,7 @@
                                     fieldsRow.appendChild(th);
                                 }
                                 var thDelete = document.createElement("th");
-                                thDelete.textContent = "Elimina";
+                                thDelete.textContent = "visualizza movimenti";
                                 fieldsRow.appendChild(thDelete);
                             }
 
@@ -239,18 +239,8 @@
                             // Aggiungi il pulsante "Elimina"
                             var tdDelete = document.createElement("td");
                             var deleteButton = document.createElement("button");
-                            deleteButton.className = "deleteButton";
-                            deleteButton.textContent = "Elimina";
-                            deleteButton.onclick = function() {
-                                // Chiamata alla funzione per eliminare l'utente con il suo nome (con conferma)
-                                var confirmation = confirm("Sei sicuro di voler eliminare l'utente " + user.Username + "?");
-                                if (confirmation) {
-                                    // Implementa la logica per eliminare l'utente dal database
-                                    deleteUser(user.Username);  // <-- Corrected parameter here
-                                    // Rimuovi la riga dalla pagina
-                                    tr.remove();
-                                }
-                            };
+                            deleteButton.className = "moveButton";
+                            deleteButton.textContent = "visualizza movimenti";
                             tdDelete.appendChild(deleteButton);
                             tr.appendChild(tdDelete);
 
@@ -259,20 +249,6 @@
                     }
                 };
                 xhr.send();
-            }
-
-            // Funzione per eliminare l'utente dal database
-            function deleteUser(username) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "../backend/api_delete_user.php", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        alert(response.message);
-                    }
-                };
-                xhr.send("username=" + username);
             }
         </script>
     </div>
