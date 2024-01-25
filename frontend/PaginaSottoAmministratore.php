@@ -17,7 +17,7 @@ $username = $_SESSION["username"];
 <head> 
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Pagina sottoAmministratore</title> 
+    <title>Pagina Sotto Amministratore</title> 
     <style>
         body {
             margin: 0;
@@ -82,7 +82,7 @@ $username = $_SESSION["username"];
 <body> 
     <header>
         <div>
-            <span>Sei nella pagina sotto amministratore</span> <br>
+            <span>Sei nella pagina Sotto amministratore</span> <br>
             <span>Benvenuto, <?php echo $username; ?>!</span>
         </div>
         <div class="header">
@@ -99,11 +99,18 @@ $username = $_SESSION["username"];
             </div>
         </a>
 
-        <a href="../frontend/gestione_scommesse.php" class="section-link">
+        <a href="../frontend/gestioneScommesse.php" class="section-link">
             <div class="bet-management">
                 <h2>Gestione Scommesse</h2>
+            </div>
+        </a>
+
+        <a href="../frontend/GestioneMovimenti.php" class="section-link">
+            <div class="bet-management">
+                <h2> Gestione Movimenti </h2>
             </div>
         </a>
     </div>
 </body>
 </html>
+
