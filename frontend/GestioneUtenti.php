@@ -243,7 +243,7 @@
                             deleteButton.textContent = "Elimina";
                             deleteButton.onclick = function() {
                                 // Chiamata alla funzione per eliminare l'utente con il suo nome (con conferma)
-                                var confirmation = confirm("Sei sicuro di voler eliminare " + user.Username + "?");
+                                var confirmation = confirm("Sei sicuro di voler eliminare l'utente " + user.Username + "?");
                                 if (confirmation) {
                                     // Implementa la logica per eliminare l'utente dal database
                                     deleteUser(user.Username);  // <-- Corrected parameter here

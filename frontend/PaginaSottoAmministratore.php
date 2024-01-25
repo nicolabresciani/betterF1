@@ -96,14 +96,12 @@ $username = $_SESSION["username"];
         <a href="../frontend/GestioneUtenti.php" class="section-link">
             <div class="user-management">
                 <h2>Gestione Utenti</h2>
-                <!-- Aggiungi qui il codice per la gestione degli utenti -->
             </div>
         </a>
 
         <a href="../frontend/gestione_scommesse.php" class="section-link">
             <div class="bet-management">
                 <h2>Gestione Scommesse</h2>
-                <!-- Aggiungi qui il codice per la gestione delle scommesse -->
             </div>
         </a>
     </div>
