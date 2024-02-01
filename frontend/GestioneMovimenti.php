@@ -84,7 +84,7 @@
             font-size: 14px;
         }
 
-        .deleteButton {
+        .viewButton {
             background-color: red;
             color: white;
             padding: 8px;
@@ -94,7 +94,7 @@
             transition: background-color 0.3s;
         }
 
-        .deleteButton:hover {
+        .viewButton:hover {
             background-color: darkred;
         }
     </style>
@@ -154,7 +154,7 @@
                                     fieldsRow.appendChild(th);
                                 }
                                 var thDelete = document.createElement("th");
-                                thDelete.textContent = "visualizza movimenti";
+                                thDelete.textContent = "Elimina";
                                 fieldsRow.appendChild(thDelete);
                             }
 
@@ -166,24 +166,16 @@
                                 tr.appendChild(td);
                             }
 
-                            // Aggiungi il pulsante "Elimina"
+                            // Aggiungi il pulsante "visualizza movimenti"
                             var tdDelete = document.createElement("td");
                             var deleteButton = document.createElement("button");
-                            deleteButton.className = "moveButton";
-                            deleteButton.textContent = "visualizza movimenti";
-                            deleteButton.onclick = function() {
-                                // Chiamata alla funzione per eliminare l'utente (con conferma)
-                                var confirmation = confirm("Sei sicuro di voler eliminare l'utente?");
-                                if (confirmation) {
-                                    // Implementa la logica per eliminare l'utente dal database
-                                    deleteUser(user.Username);
-                                    // Rimuovi la riga dalla pagina
-                                    tr.remove();
-                                }
+                            //chiamata funzione per visualizzare movimenti
+                            viewButton.className = "viewButton";
+                            viewButton.textContent = "Visualizza movimenti";
+                            viewButton.onclick = function() {
+                                // Chiamata alla funzione per visualizzare i movimenti dell'utente
+                                viewMovements(user.Username);
                             };
-                            tdDelete.appendChild(deleteButton);
-                            tr.appendChild(tdDelete);
-
                             userListContainer.appendChild(tr);
                         });
 
@@ -223,9 +215,9 @@
                                     th.textContent = field;
                                     fieldsRow.appendChild(th);
                                 }
-                                var thDelete = document.createElement("th");
-                                thDelete.textContent = "visualizza movimenti";
-                                fieldsRow.appendChild(thDelete);
+                                var thView = document.createElement("th");
+                                thView.textContent = "Visualizza movimenti";
+                                fieldsRow.appendChild(thView);
                             }
 
                             // Crea una riga per ogni utente
@@ -236,13 +228,18 @@
                                 tr.appendChild(td);
                             }
 
-                            // Aggiungi il pulsante "Elimina"
-                            var tdDelete = document.createElement("td");
-                            var deleteButton = document.createElement("button");
-                            deleteButton.className = "moveButton";
-                            deleteButton.textContent = "visualizza movimenti";
-                            tdDelete.appendChild(deleteButton);
-                            tr.appendChild(tdDelete);
+                            // Aggiungi il pulsante "visualizza movimenti" 
+                            var tdView = document.createElement("td");
+                            var viewButton = document.createElement("button");
+                            viewButton.className = "viewButton";
+                            viewButton.textContent = "Visualizza movimenti";
+                            viewButton.onclick = function() {
+                                // Chiamata alla funzione per visualizzare i movimenti dell'utente
+                                viewMovements(user.Username);
+                            };
+                            tdView.appendChild(viewButton);
+                            tr.appendChild(tdView);
+                        
 
                             userListContainer.appendChild(tr);
                         });
@@ -250,6 +247,13 @@
                 };
                 xhr.send();
             }
+            // funzione per visualizzare i movimenti dell'utente
+            function viewMovements(username) {
+                window.location.href = "../frontend/Movimenti.php";
+            }
+
+
+            
         </script>
     </div>
 </body>
