@@ -249,8 +249,17 @@
             }
             // funzione per visualizzare i movimenti dell'utente
             function viewMovements(username) {
-                window.location.href = "../frontend/Movimenti.php";
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "../backend/api_get_movements.php?username=" + username, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        // Puoi gestire la risposta della tua API qui se necessario
+                        console.log(xhr.responseText);
+                    }
+                }; 
+                xhr.send();
             }
+
 
 
             

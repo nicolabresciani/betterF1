@@ -1,3 +1,6 @@
+<?php
+    include "../backend/api_get_prelievo.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,6 +89,61 @@
         function goBack() {
             window.history.back();
         }
+
+        function fetchAndDisplayData() {
+            var prelieviContainer = document.getElementById("prelievi-container");
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "../backend/api_get_movements.php?username=" + selectedUsername, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var prelieviData = JSON.parse(xhr.responseText);
+
+                    // Pulisci la tabella
+                    prelieviContainer.innerHTML = "";
+
+                    // Crea la tabella e le intestazioni
+                    var table = document.createElement("table");
+                    var thead = document.createElement("thead");
+                    var tbody = document.createElement("tbody");
+
+                    var headerRow = document.createElement("tr");
+                    for (var field in prelieviData[0]) {
+                        var th = document.createElement("th");
+                        th.textContent = field;
+                        headerRow.appendChild(th);
+                    }
+                    thead.appendChild(headerRow);
+
+                    // Aggiungi i dati alla tabella
+                    prelieviData.forEach(function (row) {
+                        var tr = document.createElement("tr");
+                        for (var field in row) {
+                            var td = document.createElement("td");
+                            td.textContent = row[field];
+                            tr.appendChild(td);
+                        }
+                        tbody.appendChild(tr);
+                    });
+
+                    // Aggiungi la testata e il corpo alla tabella
+                    table.appendChild(thead);
+                    table.appendChild(tbody);
+
+                    // Aggiungi la tabella al container
+                    prelieviContainer.appendChild(table);
+                }
+            };
+            xhr.send();
+        }
+
+        // Aggiorna i dati ogni 2 secondi
+        setInterval(fetchAndDisplayData, 2000);
+
+        // Chiamare fetchAndDisplayData() all'inizio o dopo aver estratto i movimenti dell'utente
+        fetchAndDisplayData();
+
+ 
     </script>
 </body>
 </html>
