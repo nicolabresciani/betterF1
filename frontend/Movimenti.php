@@ -67,8 +67,12 @@
     </style>
 </head>
 <body>
+    <?php
+        // Ottieni il nome dell'utente dalla richiesta GET
+        $selectedUsername = $_GET['username'];
+    ?>
     <header class="header">
-        <h1>Movimenti Utente</h1>
+        <h3>Movimenti dell'Utente <?php echo $selectedUsername; ?></h3>
         <button onclick="goBack()">Torna Indietro</button>
     </header>
 
