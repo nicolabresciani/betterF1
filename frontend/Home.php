@@ -97,6 +97,9 @@ if ($resultSaldo->num_rows > 0) {
                 <form action="../frontend/Logout.php" method="post">
                     <button type="submit">Logout</button>
                 </form>
+                <form action="../frontend/MovimentiUtente.php" method="post">
+                    <button type="submit">movimenti</button>
+                </form>
                 <form action="../frontend/Prelievo.php" method="post">
                     <button type="submit">Prelievo</button>
                 </form>
