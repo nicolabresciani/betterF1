@@ -119,7 +119,7 @@
 
         <script>
             function goBack() {
-                window.history.back();
+                window.location.href = "../frontend/PaginaSottoAmministratore.php";
             }
             var searchTimeout;
 

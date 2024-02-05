@@ -101,10 +101,7 @@
 </head>
 <body>
     <div class="user-list">
-        <!-- Aggiunto il pulsante di ritorno indietro -->
         <button onclick="goBack()">Torna Indietro</button>
-
-        <!-- Aggiunto campo di input e pulsante di ricerca -->
         <label for="searchInput">Cerca:</label>
         <input type="text" id="searchInput" onkeyup="searchUsers()" placeholder="Cerca per Username, Nome, Cognome...">
         <br>
@@ -119,8 +116,9 @@
 
         <script>
             function goBack() {
-                window.history.back();
+                window.location.href = "../frontend/PaginaSottoAmministratore.php";
             }
+
             var searchTimeout;
 
             function searchUsers() {
@@ -129,7 +127,6 @@
                 input = document.getElementById("searchInput");
                 filter = input.value.toUpperCase();
                 
-                // Interrompi l'aggiornamento
                 clearInterval(updateInterval);
 
                 var xhr = new XMLHttpRequest();
@@ -140,25 +137,21 @@
                         var fieldsRow = document.getElementById("fields-row");
                         var users = JSON.parse(xhr.responseText);
 
-                        // Pulisci la tabella
                         userListContainer.innerHTML = "";
                         fieldsRow.innerHTML = "";
 
-                        // Visualizza gli utenti nella lista
                         users.forEach(function (user, index) {
                             if (index === 0) {
-                                // Se è il primo utente, crea la riga con i nomi dei campi
                                 for (var field in user) {
                                     var th = document.createElement("th");
                                     th.textContent = field;
                                     fieldsRow.appendChild(th);
                                 }
-                                var thDelete = document.createElement("th");
-                                thDelete.textContent = "Elimina";
-                                fieldsRow.appendChild(thDelete);
+                                var thView = document.createElement("th");
+                                thView.textContent = "Visualizza movimenti";
+                                fieldsRow.appendChild(thView);
                             }
 
-                            // Crea una riga per ogni utente
                             var tr = document.createElement("tr");
                             for (var field in user) {
                                 var td = document.createElement("td");
@@ -166,20 +159,19 @@
                                 tr.appendChild(td);
                             }
 
-                            // Aggiungi il pulsante "visualizza movimenti"
-                            var tdDelete = document.createElement("td");
-                            var deleteButton = document.createElement("button");
-                            //chiamata funzione per visualizzare movimenti
+                            var tdView = document.createElement("td");
+                            var viewButton = document.createElement("button");
                             viewButton.className = "viewButton";
                             viewButton.textContent = "Visualizza movimenti";
                             viewButton.onclick = function() {
-                                // Chiamata alla funzione per visualizzare i movimenti dell'utente
                                 viewMovements(user.Username);
                             };
+                            tdView.appendChild(viewButton);
+                            tr.appendChild(tdView);
+
                             userListContainer.appendChild(tr);
                         });
 
-                        // Riprendi l'aggiornamento solo se la barra di ricerca è vuota
                         if (filter === "") {
                             searchTimeout = setTimeout(function () {
                                 updateInterval = setInterval(getUsers, 5000);
@@ -190,7 +182,6 @@
                 xhr.send();
             }
 
-            // Aggiornamento ogni 5 secondi
             var updateInterval = setInterval(getUsers, 2000);
 
             function getUsers() {
@@ -202,14 +193,11 @@
                         var fieldsRow = document.getElementById("fields-row");
                         var users = JSON.parse(xhr.responseText);
 
-                        // Pulisci la tabella
                         userListContainer.innerHTML = "";
                         fieldsRow.innerHTML = "";
 
-                        // Visualizza gli utenti nella lista
                         users.forEach(function (user, index) {
                             if (index === 0) {
-                                // Se è il primo utente, crea la riga con i nomi dei campi
                                 for (var field in user) {
                                     var th = document.createElement("th");
                                     th.textContent = field;
@@ -220,7 +208,6 @@
                                 fieldsRow.appendChild(thView);
                             }
 
-                            // Crea una riga per ogni utente
                             var tr = document.createElement("tr");
                             for (var field in user) {
                                 var td = document.createElement("td");
@@ -228,18 +215,15 @@
                                 tr.appendChild(td);
                             }
 
-                            // Aggiungi il pulsante "visualizza movimenti" 
                             var tdView = document.createElement("td");
                             var viewButton = document.createElement("button");
                             viewButton.className = "viewButton";
                             viewButton.textContent = "Visualizza movimenti";
                             viewButton.onclick = function() {
-                                // Chiamata alla funzione per visualizzare i movimenti dell'utente
                                 viewMovements(user.Username);
                             };
                             tdView.appendChild(viewButton);
                             tr.appendChild(tdView);
-                        
 
                             userListContainer.appendChild(tr);
                         });
@@ -247,22 +231,12 @@
                 };
                 xhr.send();
             }
-            // funzione per visualizzare i movimenti dell'utente
+
             function viewMovements(username) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "../backend/api_get_movements.php?username=" + username, true);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        // Puoi gestire la risposta della tua API qui se necessario
-                        console.log(xhr.responseText);
-                    }
-                }; 
-                xhr.send();
+                // Redirect alla pagina Movimenti.php con il parametro username
+                window.location.href = "Movimenti.php?username=" + username;
             }
 
-
-
-            
         </script>
     </div>
 </body>
