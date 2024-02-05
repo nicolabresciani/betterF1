@@ -1,31 +1,34 @@
+
 <?php
-    // connessione al database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "betterf1";
+// Connessione al database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "betterF1";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // verifica della connessione
-    if ($conn->connect_error) {
-        die("Connessione fallita: " . $conn->connect_error);
+// Verifica della connessione
+if ($conn->connect_error) {
+    die("Connessione fallita: " . $conn->connect_error);
+}
+
+// Ottieni il nome utente dalla richiesta GET
+$selectedUsername = $_GET['username'];
+
+// Esegui la query per ottenere i prelievi correlati al nome utente
+$sql = "SELECT Data, Importo FROM Deposito  WHERE Portafoglio_Username = '$selectedUsername'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $prelievi = array();
+    while ($row = $result->fetch_assoc()) {
+        $prelievi[] = $row;
     }
+    echo json_encode($prelievi);
+} else {
+    echo json_encode(array("message" => "Nessun prelievo trovato per l'utente"));
+}
 
-    // esegui la query per ottenere la data e l'importo dei depositi
-    $sql = "SELECT Data, Importo FROM Deposito";
-
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        $depositi = array();
-        while ($row = $result->fetch_assoc()) {
-            $depositi[] = $row;
-        }
-        echo json_encode($depositi);
-    } else {
-        echo json_encode(array("message" => "Nessun deposito trovato"));
-    }
-
-    $conn->close();
+$conn->close();
 ?>

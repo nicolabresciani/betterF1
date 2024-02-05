@@ -1,6 +1,3 @@
-<?php
-    include "../backend/api_get_prelievo.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,11 +42,11 @@
             display: flex; /* Display flessibile per allineare su una riga */
             justify-content: space-between; /* Spaziatura uniforme tra le sezioni */
             width: 100%; /* Occupa l'intera larghezza disponibile */
+            flex-direction: column; /* Cambiato a column per allineare verticalmente le sezioni */
         }
 
         .table-container {
             margin-top: 20px;
-            flex: 1;
             overflow-y: auto;
         }
 
@@ -78,26 +75,29 @@
     <div class="movements-container">
         <div class="sections-container">
             <h2>Estratti Prelievi</h2>
+            <!-- Aggiunto un id per la tabella dei prelievi -->
+            <div class="table-container" id="prelievi-container"></div>
             <h2>Estratti Depositi</h2>
+            <!-- Aggiunto un id per la tabella dei depositi -->
+            <div class="table-container" id="depositi-container"></div>
         </div>
-
-        <div class="table-container" id="prelievi-container"></div>
-        <div class="table-container" id="depositi-container"></div>
     </div>
 
+   <!-- Aggiungi questa riga di codice all'interno del tag <script> nel tuo file Movimenti.php -->
     <script>
-        function goBack() {
-            window.history.back();
-        }
-
+        var selectedUsername = "<?php echo $_GET['username']; ?>";
+        
+        // Funzione per ottenere e visualizzare i dati nella tabella
         function fetchAndDisplayData() {
             var prelieviContainer = document.getElementById("prelievi-container");
+            var depositiContainer = document.getElementById("depositi-container");
 
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "../backend/api_get_movements.php?username=" + selectedUsername, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var prelieviData = JSON.parse(xhr.responseText);
+            // Chiamata API per i prelievi
+            var xhrPrelievi = new XMLHttpRequest();
+            xhrPrelievi.open("GET", "../backend/api_get_prelievo.php?username=" + selectedUsername, true);
+            xhrPrelievi.onreadystatechange = function () {
+                if (xhrPrelievi.readyState == 4 && xhrPrelievi.status == 200) {
+                    var prelieviData = JSON.parse(xhrPrelievi.responseText);
 
                     // Pulisci la tabella
                     prelieviContainer.innerHTML = "";
@@ -130,20 +130,69 @@
                     table.appendChild(thead);
                     table.appendChild(tbody);
 
-                    // Aggiungi la tabella al container
+                    // Aggiungi la tabella al container dei prelievi
                     prelieviContainer.appendChild(table);
                 }
             };
-            xhr.send();
+            xhrPrelievi.send();
+
+            // Chiamata API per i depositi
+            var xhrDepositi = new XMLHttpRequest();
+            xhrDepositi.open("GET", "../backend/api_get_deposito.php?username=" + selectedUsername, true);
+            xhrDepositi.onreadystatechange = function () {
+                if (xhrDepositi.readyState == 4 && xhrDepositi.status == 200) {
+                    var depositiData = JSON.parse(xhrDepositi.responseText);
+
+                    // Pulisci la tabella
+                    depositiContainer.innerHTML = "";
+
+                    // Crea la tabella e le intestazioni
+                    var table = document.createElement("table");
+                    var thead = document.createElement("thead");
+                    var tbody = document.createElement("tbody");
+
+                    var headerRow = document.createElement("tr");
+                    for (var field in depositiData[0]) {
+                        var th = document.createElement("th");
+                        th.textContent = field;
+                        headerRow.appendChild(th);
+                    }
+                    thead.appendChild(headerRow);
+
+                    // Aggiungi i dati alla tabella
+                    depositiData.forEach(function (row) {
+                        var tr = document.createElement("tr");
+                        for (var field in row) {
+                            var td = document.createElement("td");
+                            td.textContent = row[field];
+                            tr.appendChild(td);
+                        }
+                        tbody.appendChild(tr);
+                    });
+
+                    // Aggiungi la testata e il corpo alla tabella
+                    table.appendChild(thead);
+                    table.appendChild(tbody);
+
+                    // Aggiungi la tabella al container dei depositi
+                    depositiContainer.appendChild(table);
+                }
+            };
+            xhrDepositi.send();
         }
 
-        // Aggiorna i dati ogni 2 secondi
+        // Funzione per tornare alla pagina precedente
+        function goBack() {
+            window.location.href = "../frontend/GestioneMovimenti.php";
+        }
+
+        // Chiama la funzione per ottenere e visualizzare i dati ogni 2 secondi
         setInterval(fetchAndDisplayData, 2000);
 
-        // Chiamare fetchAndDisplayData() all'inizio o dopo aver estratto i movimenti dell'utente
+        // Chiama la funzione all'inizio o dopo aver estratto i movimenti dell'utente
         fetchAndDisplayData();
 
- 
     </script>
+
 </body>
 </html>

@@ -234,7 +234,7 @@
 
             function viewMovements(username) {
                 // Redirect alla pagina Movimenti.php con il parametro username
-                window.location.href = "Movimenti.php?username=" + username;
+                window.location.href = "../frontend/Movimenti.php?username=" + username;
             }
 
         </script>
