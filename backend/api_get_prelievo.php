@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 $selectedUsername = $_GET['username'];
 
 // Esegui la query per ottenere i prelievi correlati al nome utente
-$sql = "SELECT Prelievo_Id, Data, Prelievo FROM Prelievo WHERE Portafoglio_Username = '$selectedUsername'";
+$sql = "SELECT  Data, Prelievo FROM Prelievo WHERE Portafoglio_Username = '$selectedUsername'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
