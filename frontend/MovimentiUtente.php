@@ -1,3 +1,27 @@
+<?php
+    session_start();
+    
+    // Connessione al database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "betterF1";
+    
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    // Controllo della connessione
+    if ($conn->connect_error) {
+        die("Connessione fallita: " . $conn->connect_error);
+    }
+    
+    // Verifica se l'utente è autenticato
+    if (!isset($_SESSION["username"])) {
+        header("Location: Login.php");
+        exit();
+    }
+    
+    $username = $_SESSION["username"];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,25 +92,22 @@
 </head>
 <body>
     <header class="header">
-        <h3>questi sono tutti i tuoi movimenti che hai fatto fino ad ora</h3>
+        <h3>Movimenti Utente</h3>
         <button onclick="goBack()">Torna Indietro</button>
     </header>
 
     <div class="movements-container">
         <div class="sections-container">
             <h2>Estratti Prelievi</h2>
-            <!-- Aggiunto un id per la tabella dei prelievi -->
             <div class="table-container" id="prelievi-container"></div>
             <h2>Estratti Depositi</h2>
-            <!-- Aggiunto un id per la tabella dei depositi -->
             <div class="table-container" id="depositi-container"></div>
         </div>
     </div>
 
-   <!-- Aggiungi questa riga di codice all'interno del tag <script> nel tuo file Movimenti.php -->
     <script>
-        var selectedUsername = "<?php echo $_GET['username']; ?>";
-        
+        var selectedUsername = "<?php echo $username; ?>";
+
         // Funzione per ottenere e visualizzare i dati nella tabella
         function fetchAndDisplayData() {
             var prelieviContainer = document.getElementById("prelievi-container");
@@ -94,7 +115,7 @@
 
             // Chiamata API per i prelievi
             var xhrPrelievi = new XMLHttpRequest();
-            xhrPrelievi.open("GET", "../backend/api_get_apiMovimentiUtente?username=" + selectedUsername, true);
+            xhrPrelievi.open("GET", "../backend/api_get_prelievo.php?username=" + selectedUsername, true);
             xhrPrelievi.onreadystatechange = function () {
                 if (xhrPrelievi.readyState == 4 && xhrPrelievi.status == 200) {
                     var prelieviData = JSON.parse(xhrPrelievi.responseText);
@@ -138,7 +159,7 @@
 
             // Chiamata API per i depositi
             var xhrDepositi = new XMLHttpRequest();
-            xhrDepositi.open("GET", "../backend/api_get_apiMovimentiUtente.php?username=" + selectedUsername, true);
+            xhrDepositi.open("GET", "../backend/api_get_deposito.php?username=" + selectedUsername, true);
             xhrDepositi.onreadystatechange = function () {
                 if (xhrDepositi.readyState == 4 && xhrDepositi.status == 200) {
                     var depositiData = JSON.parse(xhrDepositi.responseText);
@@ -181,16 +202,16 @@
             xhrDepositi.send();
         }
 
-        // Funzione per tornare alla pagina precedente
-        function goBack() {
-            window.location.href = "../frontend/Home.php";
-        }
 
         // Chiama la funzione per ottenere e visualizzare i dati ogni 2 secondi
         setInterval(fetchAndDisplayData, 2000);
 
         // Chiama la funzione all'inizio o dopo aver estratto i movimenti dell'utente
         fetchAndDisplayData();
+
+        function goBack() {
+            window.location.href = "../frontend/Home.php";
+        }
 
     </script>
 
