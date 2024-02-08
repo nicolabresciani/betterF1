@@ -29,6 +29,16 @@ function isValidDateFormat($dateString) {
     return $dateTime && $dateTime->format('Y-m-d') === $dateString;
 }
 
+// funzione che crea un token lungo 6 numeri che vanno a 0 a 9
+function generaToken() {
+    $token = "";
+    for ($i = 0; $i < 6; $i++) {
+        $token .= rand(0, 9);
+    }
+    return $token;
+}
+
+
 // Registrazione utente
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
@@ -60,15 +70,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 }   
 
-                $true = true;             
+                $true = true;     
+                // Genera il token
+                $token = generaToken();        
                 
                 // Determina il ruolo
                 $ruoloAssegnato = ($ruolo === "sottoAmministratore") ? "SottoAmministratore" : "Utente Normale";
 
                 // Inserimento dati nel database - Utente solo se il ruolo non è "SottoAmministratore"
                 if ($ruoloAssegnato !== "SottoAmministratore") {
-                    $sql = "INSERT INTO Utente (Username, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail,Ruolo) 
-                            VALUES ('$username', '$nome', '$cognome', '$hashPassword', '$dataDiNascita', '$luogoNascita', '$cellulare', '$mail', '$ruoloAssegnato')";
+                    $sql = "INSERT INTO Utente (Username, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo, CodiceValidazione) 
+                            VALUES ('$username', '$nome', '$cognome', '$hashPassword', '$dataDiNascita', '$luogoNascita', '$cellulare', '$mail', '$ruoloAssegnato', '$token')";
 
                     // Esegui la query solo se $sql è stato inizializzato
                     if (!empty($sql)) {
