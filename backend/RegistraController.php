@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 echo "Registrazione avvenuta con successo";
-                header("location: ../frontend/Login.php");
+                header("location: ../frontend/PaginaCodiceValidazione.php");
                 exit();
             } else {
                 echo "Errore: Il numero di telefono deve essere lungo 10 cifre.";
