@@ -19,10 +19,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.valido) {
-                        // Stampa il codice di verifica nella console
-                        console.log("Codice di verifica corretto:", data.codice);
-                        // Rimani sulla stessa pagina e visualizza un messaggio di successo
-                        //alert("Codice di verifica corretto: " + data.codice);
                         window.location.href = "../frontend/Login.php";
                     } else {
                         alert("Codice di verifica errato");
@@ -30,6 +26,25 @@
                 })
                 .catch(error => console.error("Errore:", error));
         }
+
+        function codiceConsole(){
+            // Esegue una richiesta al backend per ottenere il codice di verifica
+            fetch("../backend/EstrazioneCodiceValidazione.php")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valido) {
+                        console.log("Codice di verifica:", data.codice); // Stampa il codice di verifica sulla console
+                    } else {
+                        console.error("Errore: codice di verifica non disponibile");
+                    }
+                })
+                .catch(error => console.error("Errore:", error));
+        }
+
+        // Chiama la funzione codiceConsole() quando la pagina è completamente caricata
+        document.addEventListener("DOMContentLoaded", function() {
+            codiceConsole();
+        });
     </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <title>Registrazione</title>
 </head>
 <body>
-    <form method="post" action="../backend/RegistraController.php">
+    <form id="registrazioneForm" method="post" action="../backend/RegistraController.php">
         <label for="username">Username:</label>
         <input type="text" name="username" required>
         <br>
