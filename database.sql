@@ -8,7 +8,7 @@ CREATE TABLE Portafoglio ( Username VARCHAR(255) PRIMARY KEY, Stato VARCHAR(255)
 
 -- Creazione della tabella Utente
 
-CREATE TABLE Utente ( Username VARCHAR(255) PRIMARY KEY, Nome VARCHAR(255), Cognome VARCHAR(255), Password VARCHAR(255), DataDiNascita DATE, LuogoNascita VARCHAR(255), Cellulare VARCHAR(15), Mail VARCHAR(255), Ruolo VARCHAR(20), CodiceValidazioneMail INT(6));
+CREATE TABLE Utente ( Username VARCHAR(255) PRIMARY KEY, Nome VARCHAR(255), Cognome VARCHAR(255), Password VARCHAR(255), DataDiNascita DATE, LuogoNascita VARCHAR(255), Cellulare VARCHAR(15), Mail VARCHAR(255), Ruolo VARCHAR(20), CodiceValidazione INT(6));
 
 
 -- Creazione della tabella Amministratore

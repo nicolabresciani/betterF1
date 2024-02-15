@@ -19,13 +19,13 @@
         $username = $_SESSION['username'];
 
         // Query per ottenere il codice di validazione corrispondente allo username specificato
-        $query = "SELECT CodiceValidazioneMail FROM Utente WHERE Username = '$username'";
+        $query = "SELECT CodiceValidazione FROM Utente WHERE Username = '$username'";
 
         $result = $conn->query($query);
 
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $codice = $row['CodiceValidazioneMail'];
+            $codice = $row['CodiceValidazione'];
 
             // Restituisci il codice come parte di una risposta JSON
             echo json_encode(['valido' => true, 'codice' => $codice]);

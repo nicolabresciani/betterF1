@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Inserimento dati nel database - Utente solo se il ruolo non è "SottoAmministratore"
                 if ($ruoloAssegnato !== "SottoAmministratore") {
-                    $sql = "INSERT INTO Utente (Username, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo, CodiceValidazioneMail) 
+                    $sql = "INSERT INTO Utente (Username, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo, CodiceValidazione) 
                             VALUES ('$username', '$nome', '$cognome', '$hashPassword', '$dataDiNascita', '$luogoNascita', '$cellulare', '$mail', '$ruoloAssegnato', '$token')";
 
                     // Esegui la query solo se $sql è stato inizializzato
