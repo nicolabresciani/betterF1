@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Connessione al database 
 $servename = "localhost";
 $username = "root";
@@ -79,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Inserimento dati nel database - Utente solo se il ruolo non è "SottoAmministratore"
                 if ($ruoloAssegnato !== "SottoAmministratore") {
-                    $sql = "INSERT INTO Utente (Username, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo, CodiceValidazione) 
+                    $sql = "INSERT INTO Utente (Username, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo, CodiceValidazioneMail) 
                             VALUES ('$username', '$nome', '$cognome', '$hashPassword', '$dataDiNascita', '$luogoNascita', '$cellulare', '$mail', '$ruoloAssegnato', '$token')";
 
                     // Esegui la query solo se $sql è stato inizializzato
@@ -128,6 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 echo "Registrazione avvenuta con successo";
+                // Carica l'username in sessione
+                $_SESSION["username"] = $username;
                 header("location: ../frontend/PaginaCodiceValidazione.php");
                 exit();
             } else {

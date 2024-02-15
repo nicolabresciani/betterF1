@@ -15,36 +15,28 @@
         die("Connessione fallita: " . $conn->connect_error);
     }
 
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        // Assicurati che lo username sia stato impostato nella sessione
-        if(isset($_SESSION['username'])) {
-            $username = $_SESSION['username'];
+    if(isset($_SESSION['username'])) {
+        $username = $_SESSION['username'];
 
-            // Query per ottenere il codice di validazione corrispondente allo username specificato
-            $query = "SELECT CodiceValidazione FROM Utente WHERE Username = '$username'";
-            echo "Query: " . $query . "<br>"; // Debug della query
+        // Query per ottenere il codice di validazione corrispondente allo username specificato
+        $query = "SELECT CodiceValidazioneMail FROM Utente WHERE Username = '$username'";
 
-            $result = $conn->query($query);
+        $result = $conn->query($query);
 
-            if ($result) {
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $response = array("valido" => true, "codice" => $row['CodiceValidazione']);
-                    echo json_encode($response);
-                } else {
-                    $response = array("valido" => false);
-                    echo json_encode($response);
-                }
-            } else {
-                echo "Errore nella query: " . $conn->error; // Debug dell'errore SQL
-            }
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $codice = $row['CodiceValidazioneMail'];
+
+            // Restituisci il codice come parte di una risposta JSON
+            echo json_encode(['valido' => true, 'codice' => $codice]);
         } else {
-            // Se lo username non è impostato nella sessione, restituisci un errore
-            $response = array("valido" => false, "errore" => "Username non impostato nella sessione");
-            echo json_encode($response);
+            // Restituisci un messaggio di errore come parte di una risposta JSON
+            echo json_encode(['valido' => false, 'errore' => 'Codice di validazione non disponibile']);
         }
+    } else {
+        // Restituisci un messaggio di errore come parte di una risposta JSON
+        echo json_encode(['valido' => false, 'errore' => 'Username non impostato nella sessione']);
     }
 
-    // Chiudi connessione al database
     $conn->close();
 ?>

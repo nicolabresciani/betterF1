@@ -36,6 +36,7 @@
                         console.log("Codice di verifica:", data.codice); // Stampa il codice di verifica sulla console
                     } else {
                         console.error("Errore: codice di verifica non disponibile");
+                        console.error("Errore:", data.errore);
                     }
                 })
                 .catch(error => console.error("Errore:", error));

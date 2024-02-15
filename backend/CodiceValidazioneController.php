@@ -17,13 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $codiceInput = $_GET["codice"];
 
     // Query per ottenere il codice di verifica dalla tabella Utente
-    $query = "SELECT CodiceValidazione FROM Utente WHERE CodiceValidazione = '$codiceInput'";
+    $query = "SELECT CodiceValidazioneMail FROM Utente WHERE CodiceValidazioneMail = '$codiceInput'";
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
         // Il codice è valido
         $row = $result->fetch_assoc();
-        $response = array("valido" => true, "codice" => $row['CodiceValidazione']);
+        $response = array("valido" => true, "codice" => $row['CodiceValidazioneMail']);
         echo json_encode($response);
     } else {
         // Il codice non è valido
