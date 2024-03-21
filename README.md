@@ -39,8 +39,8 @@ step10: appariranno tanti file, cliccare su Index.php partirà il mio progettino
 
 
 ## schema e/r
-![schemaER](https://github.com/nicolabresciani/betterF1/assets/101709282/1b4f7bf7-cb14-47b5-aefa-30d2936eb99e)
 
+![schema er](https://github.com/nicolabresciani/betterF1/assets/101709282/2c85723c-8dd0-4f4b-96e7-99deadd29bee)
 
 
 ## schema relazionale
@@ -53,6 +53,8 @@ step10: appariranno tanti file, cliccare su Index.php partirà il mio progettino
 - Quota(<ins>Id</ins>, Valore, Stato, Gara_Id, SottoAmministratore_Username)
 - ScommessaQuota(<ins>Scommessa_Id</ins>,<ins>Quota_Id</ins>)
 - Gara(<ins>Id</ins>, Risultato, Stato, LuogoDiSvolta, SottoAmministratore_Username)
+- Gestione(<ins> Id</ins>, NomeProgramma, SocietaAcquirente, DataVendita, DettagliVendita)
+
 
 
 
