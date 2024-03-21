@@ -51,7 +51,7 @@ step10: appariranno tanti file, cliccare su Index.php partirà il mio progettino
  - Prelievo(<ins>Id </ins>, Data, Importo, Portafoglio_Username)
  - Scommessa(<ins>Id</ins> , ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Gara_id, Amministratore_Username)
  - Quota(<ins>Id </ins>, Valore, Stato, Gara_Id, SottoAmministratore_Username)
- - ScommessaQuota(Scommessa_Id, Quota_Id)
+ - ScommessaQuota(<ins>Scommessa_Id</ins>, <ins>Quota_Id</ins>)
  - Gara(<ins>Id</ins> , Risultato, Stato, LuogoDiSvolta, SottoAmministratore_Username)
 
 
