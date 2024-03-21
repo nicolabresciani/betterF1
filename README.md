@@ -44,15 +44,15 @@ step10: appariranno tanti file, cliccare su Index.php partirà il mio progettino
 
 
 ## schema relazionale
- - Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail, Ruolo, Portafoglio_Username, Tenant_Id)
- - Amministratore(<ins>Username</ins> , Nome, Cognome, Password, Ruolo)
- - SottoAmministratore(<ins>Username</ins> , Nome, Cognome, Password, Ruolo, Amministratore_Username)
- - Portafoglio(<ins>Username</ins>, Stato, Saldo)
- - Prelievo(<ins>Id </ins>, Data, Importo, Portafoglio_Username)
- - Scommessa(<ins>Id</ins> , ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Gara_id, Amministratore_Username)
- - Quota(<ins>Id </ins>, Valore, Stato, Gara_Id, SottoAmministratore_Username)
- - ScommessaQuota(<ins>Scommessa_Id</ins>, <ins>Quota_Id</ins>)
- - Gara(<ins>Id</ins> , Risultato, Stato, LuogoDiSvolta, SottoAmministratore_Username)
+- Amministratore(<ins>Username</ins>, Nome, Cognome, Password, Ruolo)
+- SottoAmministratore(<ins>Username</ins>, Nome, Cognome, Password, Ruolo, Amministratore_Username)
+- Utente(<ins>Username</ins>, Nome, Cognome, Password, DataDiNascita, LuogoNascita, Cellulare, Mail,Ruolo, Portafoglio_Username)
+- Portafoglio(<ins>Username</ins>, Stato, Saldo)
+- Prelievo(<ins>Id</ins>, Data, Importo, Portafoglio_Username)
+- Scommessa(<ins>Id</ins>, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Gara_id, Amministratore_Username)
+- Quota(<ins>Id</ins>, Valore, Stato, Gara_Id, SottoAmministratore_Username)
+- ScommessaQuota(<ins>Scommessa_Id</ins>,<ins>Quota_Id</ins>)
+- Gara(<ins>Id</ins>, Risultato, Stato, LuogoDiSvolta, SottoAmministratore_Username)
 
 
 
