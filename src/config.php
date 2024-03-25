@@ -2,7 +2,7 @@
 
 return [
     'jwt' => [
-        'secret' => 'your_secret_key'
+        'secret' => 'brescia'
     ],
     // Other configuration settings
 ];
