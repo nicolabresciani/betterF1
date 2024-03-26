@@ -83,7 +83,7 @@
             
 
             // Query per selezionare i dati dal carrello provvisorio dell'utente
-            $query = "SELECT NominativoPilota, Quota FROM carrelloprovvisorio WHERE Utente_Username = '$utenteUsername'";
+            $query = "SELECT NominativoPilota, Quota FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
             $result = $conn->query($query);
 
             // Verifica se sono presenti risultati

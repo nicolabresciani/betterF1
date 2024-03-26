@@ -26,7 +26,7 @@ if (isset($_POST['pilota']) && isset($_POST['quota'])) {
     }
 
     // Controlla se l'utente ha già una quota nel carrello provvisorio
-    $checkQuery = "SELECT * FROM carrelloprovvisorio WHERE Utente_Username = '$utenteUsername'";
+    $checkQuery = "SELECT * FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
     $result = $conn->query($checkQuery);
     if ($result->num_rows > 0) {
         // L'utente ha già una quota nel carrello, invia un messaggio di avviso
@@ -37,7 +37,7 @@ if (isset($_POST['pilota']) && isset($_POST['quota'])) {
         $scommessaId = substr(md5(uniqid(rand(), true)), 0, 10);
 
         // Prepara e esegui la query di inserimento
-        $sql = "INSERT INTO carrelloprovvisorio (Utente_Username, Scommessa_Id, NominativoPilota, Quota, Importo) VALUES ('$utenteUsername', '$scommessaId','$pilota' ,$quota, 0)";
+        $sql = "INSERT INTO CarrelloProvvisorio (Utente_Username, Scommessa_Id, NominativoPilota, Quota, Importo) VALUES ('$utenteUsername', '$scommessaId','$pilota' ,$quota, 0)";
         if ($conn->query($sql) === TRUE) {
             echo "Dati inseriti con successo nel database.";
         } else {

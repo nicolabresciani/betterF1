@@ -2,7 +2,7 @@
 // Funzione per verificare l'autenticità dell'utente
 function verificaAutenticitaUtente($conn, $username, $password) {
     // Prepara la query per selezionare l'utente con username e password forniti
-    $verifica = "SELECT * FROM Utente WHERE Username='$username' AND password='$password'";
+    $verifica = "SELECT * FROM Utente WHERE Username='$username' AND Password='$password'";
     
     // Esegue la query
     $result = $conn->query($verifica);
@@ -13,18 +13,18 @@ function verificaAutenticitaUtente($conn, $username, $password) {
         $row = $result->fetch_assoc();
         
         // Verifica lo stato dell'utente
-        if ($row["Stato"] == "attivo") {
+        if ($row["Stato"] == "attivo" && $row["Ruolo"] == "Utente Normale") {
             return true; // Utente autenticato e attivo
         } else {
-            return "sospeso"; // Utente trovato ma stato non attivo
+            return $row["Stato"]; // Utente trovato ma stato non attivo
         }
     } else {
         return false; // Utente non trovato
     }
 }
+
 function verificaAutenticitaSottoAmministratore($conn, $username, $password) {
-    
-    $verifica = "SELECT * FROM SottoAmministratore WHERE Username='$username' AND password='$password'";
+    $verifica = "SELECT * FROM SottoAmministratore WHERE Username='$username' AND Password='$password'";
     $result = $conn->query($verifica);
 
     return $result->num_rows > 0;
@@ -48,7 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = md5($_POST["password"]);
 
     // Verifica se l'utente è un "Utente"
-    if (verificaAutenticitaUtente($conn, $username, $password)) {
+    $auth_result = verificaAutenticitaUtente($conn, $username, $password);
+    if ($auth_result === true) {
         // Inizializza la sessione
         session_start();
 
@@ -71,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../frontend/PaginaSottoAmministratore.php");
         exit();
     } elseif ($auth_result === "sospeso") {
-        echo "account attualmente sospeso";
+        echo "Account attualmente sospeso";
     } else {
         echo "Errore: Nome utente o password non validi.";
     }
