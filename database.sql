@@ -55,34 +55,35 @@ CREATE TABLE Deposito (
 
 
 CREATE TABLE Scommessa (
-    Id INT  AUTO_INCREMENT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Id_Scommessa VARCHAR(10) UNIQUE,
     ImportoScommesso DECIMAL(10, 2),
     ImportoVinto DECIMAL(10, 2),
     StatoScommessa VARCHAR(255),
     Data DATE,
     Utente_Username VARCHAR(255),
-    Quota_Id INT,
+    Quota_Id DECIMAL(10,2),
     Amministratore_Username VARCHAR(255),
     FOREIGN KEY (Utente_Username) REFERENCES Utente(Username),
     FOREIGN KEY (Amministratore_Username) REFERENCES Amministratore(Username)
 );
 
 CREATE TABLE ScommessaQuota (
-    Scommessa_Id INT,
-    Quota_Id INT,
+    Scommessa_Id VARCHAR(10),
+    Quota_Id DECIMAL(10,2),
     PRIMARY KEY (Scommessa_Id, Quota_Id),
-    FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id),
+    FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id_Scommessa)
 );
 
 CREATE TABLE Carrello (
     Id INT AUTO_INCREMENT PRIMARY KEY,
+    Scommessa_Id VARCHAR(10),
     Utente_Username VARCHAR(255),
-    Scommessa_Id INT,
-    Quota INT,
-    Importo INT,
-    FOREIGN KEY (Utente_Username) REFERENCES Utente(Username),
-    FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id)
+    Quota DECIMAL(10,2),
+    Importo DECIMAL(10,2),
+    FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id_Scommessa)
 );
+
 
 CREATE TABLE CarrelloProvvisorio (
     Id INT AUTO_INCREMENT PRIMARY KEY,
