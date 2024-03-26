@@ -28,15 +28,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $amministratoreUsername = "Nick"; // Presumo che 'Nick' sia il nome utente dell'amministratore, modificarlo se diverso
 
     // Verifica se i dati POST sono stati inviati correttamente
-    if(isset($_POST['importo']) && isset($_POST['id']) && isset($_POST['quota'])) {
+    if(isset($_POST['importo']) && isset($_POST['quota'])) {
         // Definizione delle variabili
         $importo = $_POST['importo'];
-        $id = $_POST['id'];
         $quota = $_POST['quota'];
+    
+        // valore autoincrementale
+        $id = 0;
 
+        $si = $id + 1;
         // Query per inserire la scommessa nel database
         $query_insert_scommessa = "INSERT INTO Scommessa (ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Quota_Id, Amministratore_Username) 
-                                    VALUES ('$importo', '0', 'Aperta', CURDATE(), '$utenteUsername', '$id', '$amministratoreUsername')";
+                            VALUES ('$importo', '0', 'Aperta', CURDATE(), '$utenteUsername', '$quota', '$amministratoreUsername')";
 
         // Esecuzione della query per inserire la scommessa
         if ($conn->query($query_insert_scommessa) === TRUE) {
@@ -57,6 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             // Errore nell'esecuzione della query
             echo "Errore: " . $query_insert_scommessa . "<br>" . $conn->error;
+        }
+
+        // Controllo aggiuntivo sull'operazione di inserimento
+        if ($conn->affected_rows > 0) {
+            // L'operazione di inserimento è stata eseguita correttamente
+            echo "Scommessa inserita correttamente nel database.";
+        } else {
+            // Si è verificato un errore durante l'inserimento dei dati nel database
+            echo "Errore durante l'inserimento della scommessa nel database.";
         }
     } else {
         // Messaggio di errore se i dati POST non sono stati inviati correttamente

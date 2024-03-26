@@ -153,7 +153,7 @@
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Gestisci la risposta del server qui
-                alert(xhr.responseText);
+                console.log(xhr.responseText);
             }
         };
         xhr.send("importo=" + importo + "&id=" + id + "&quota=" + quota);

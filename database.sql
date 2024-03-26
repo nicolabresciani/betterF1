@@ -55,7 +55,7 @@ CREATE TABLE Deposito (
 
 
 CREATE TABLE Scommessa (
-    Id INT PRIMARY KEY,
+    Id INT  AUTO_INCREMENT PRIMARY KEY,
     ImportoScommesso DECIMAL(10, 2),
     ImportoVinto DECIMAL(10, 2),
     StatoScommessa VARCHAR(255),
@@ -75,7 +75,7 @@ CREATE TABLE ScommessaQuota (
 );
 
 CREATE TABLE Carrello (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Utente_Username VARCHAR(255),
     Scommessa_Id INT,
     Quota INT,
