@@ -1,12 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carrello</title>
-<style>
-    body {
+<style>  body {
         font-family: Arial, sans-serif;
         background-color: #f2f2f2;
         margin: 0;
@@ -30,17 +28,33 @@
     }
     th, td {
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 12px;
         text-align: left;
     }
     th {
         background-color: #f2f2f2;
-    }
-    .saldo {
-        margin-bottom: 20px;
-    }
-    .saldo span {
         font-weight: bold;
+    }
+    .scommetti-input {
+        width: 80px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .action-cell {
+        text-align: center;
+    }
+    .scommetti-button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+    }
+    .scommetti-button:hover {
+        background-color: #0056b3;
     }
     .home-link {
         display: block;
@@ -53,62 +67,60 @@
 </style>
 </head>
 <body>
-
 <div class="container">
     <h1>Carrello</h1>
-                 <!-- PHP per recupero dati dal database -->
+    <table>
+        <thead>
+            <tr>
+                <th>Pilota</th>
+                <th>Quota</th>
+                <th>Importo</th>
+                <th>Possibile Vittoria</th>
+                <th>Stato</th>
+                <th>Data</th>
+                <th>Azione</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- PHP per recupero dati dal database -->
             <?php
             session_start();
-
-            // Connessione al database
             $servername = "localhost";
             $username = "root";
             $password = "";
             $dbname = "betterF1";
-
-            // Verifica se l'utente è loggato
             if (!isset($_SESSION['username'])) {
                 header("Location: ../frontend/Login.php");
                 exit();
             }
-
-            // Connessione al database
             $conn = new mysqli($servername, $username, $password, $dbname);
             if ($conn->connect_error) {
                 die("Connessione fallita: " . $conn->connect_error);
             }
-
-            // Recupera l'username dell'utente loggato
             $utenteUsername = $_SESSION['username'];
-            
-
-            // Query per selezionare i dati dal carrello provvisorio dell'utente
-            $query = "SELECT NominativoPilota, Quota FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
+            $query = "SELECT Id, NominativoPilota, Quota FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
             $result = $conn->query($query);
-
-            // Verifica se sono presenti risultati
             if ($result->num_rows > 0) {
-                // Stampa i dati nella tabella del carrello
+                // Array per memorizzare le quote
+                $quote = array();
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
                     echo "<td>" . $row["NominativoPilota"] . "</td>";
                     echo "<td>" . $row["Quota"] . "</td>";
-                    // Aggiungi campo di input per l'importo scommesso
-                    echo "<td><input type='text' id='importo_" . $row["Id"] . "'></td>";
-                    // Calcola il possibile importo della vittoria basato sull'importo scommesso e sulla quota
-                    echo "<td>" . $row["Quota"] * 100 . "</td>";
+                    echo "<td> <input type='number' step='0.1' class='scommetti-input' id='importo_" . $row["Id"] . "' oninput='updatePossibleWin(this)' min='1' </td>";
+                    echo "<td class='possibile-vittoria'></td>";
                     echo "<td>Aperta</td>";
                     echo "<td>" . date("Y-m-d") . "</td>";
-                    // Aggiungi pulsante "Scommetti" e associa la funzione scommetti() al suo click
-                    echo "<td><button onclick='scommetti(" . $row["Id"] . ")'>Scommetti</button></td>";
+                    echo "<td class='action-cell'><button class='scommetti-button' onclick='scommetti(" . $row["Id"] . ", " . $row["Quota"] . ")'>Scommetti</button></td>";
                     echo "</tr>";
+                    // Aggiungi la quota all'array delle quote
+                    $quote[$row["Id"]] = $row["Quota"];
                 }
+                // Trasforma l'array PHP in un array JavaScript
+                echo "<script>var quote = " . json_encode($quote) . ";</script>";
             } else {
-                // Nessun risultato trovato nel carrello provvisorio
                 echo "<tr><td colspan='7'>Nessun elemento nel carrello provvisorio.</td></tr>";
             }
-
-            // Chiudi la connessione
             $conn->close();
             ?>
         </tbody>
@@ -116,14 +128,37 @@
     <a href="../frontend/Home.php" class="home-link">Torna alla pagina Home</a>
 </div>
 
-<!-- Aggiunto script JavaScript per gestire il click del pulsante "Scommetti" -->
 <script>
-    // Funzione per gestire il click del pulsante "Scommetti"
-    function scommetti(id) {
-        var importo = document.getElementById('importo_' + id).value;
-        // Invia i dati al server per l'elaborazione della scommessa
-        // Puoi usare AJAX per inviare i dati al server
+    function updatePossibleWin(input) {
+        var id = input.id.split("_")[1];
+        var importo = parseFloat(input.value); // Converti l'importo in un numero
+        // Verifica se l'importo è inferiore a 1 e se sì, imposta il valore a 1
+        if (importo < 1) {
+            importo = 1;
+            input.value = importo; // Imposta il valore dell'input a 1
+        }
+        var quota = quote[id]; // Recupera la quota dall'array JavaScript
+        var possibileVittoria = (importo * quota).toFixed(2); // Limita la vittoria a due decimali
+        input.parentNode.nextElementSibling.innerHTML = possibileVittoria;
     }
+
+    function scommetti(id, quota) {
+        var importo = parseFloat(document.getElementById('importo_' + id).value); // Converti l'importo in un numero
+        var possibileVittoria = (importo * quota).toFixed(2); // Limita la vittoria a due decimali
+        
+        // Invia i dati al server per l'elaborazione della scommessa utilizzando AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../backend/scommetti.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Gestisci la risposta del server qui
+                alert(xhr.responseText);
+            }
+        };
+        xhr.send("importo=" + importo + "&id=" + id + "&quota=" + quota);
+    }
+
 </script>
 
 </body>
