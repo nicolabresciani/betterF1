@@ -19,7 +19,7 @@ CREATE TABLE Utente (
     Mail VARCHAR(255),
     Ruolo VARCHAR(20),
     CodiceValidazione INT(6),
-    Stato ENUM('attivo', 'sospeso') DEFAULT 'attivo';
+    Stato ENUM('attivo', 'sospeso') DEFAULT 'attivo'
 );
 
 
@@ -50,8 +50,6 @@ CREATE TABLE Deposito (
     Portafoglio_Username VARCHAR(255),
     FOREIGN KEY (Portafoglio_Username) REFERENCES Portafoglio(Username)
 );
- --Deposito_Id è l'ID univoco per ogni deposito
- -- Portafoglio_Username è la chiave esterna che fa riferimento alla chiave primaria di Portafoglio
 
 
 CREATE TABLE Scommessa (
@@ -99,3 +97,6 @@ CREATE TABLE CarrelloProvvisorio (
 -- Utente_Username: nome utente dell'utente che possiede il carrello.
 -- Scommessa_Id: identificatore della scommessa aggiunta al carrello.
 -- Quantita: la quantità di scommesse dello stesso tipo aggiunte al carrello.
+
+INSERT INTO `Amministratore` (`Username`, `Nome`, `Cognome`, `Password`, `Ruolo`) VALUES ('Nick', 'Nick', 'Nick', 'Nick', 'Amministratore');
+INSERT INTO `SottoAmministratore` (`Username`, `Nome`, `Cognome`, `Password`, `Ruolo`, `Amministratore_Username`) VALUES ('a', 'a', 'a', '0cc175b9c0f1b6a831c399e269772661', 'SottoAmministratore', 'Nick');

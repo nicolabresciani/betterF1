@@ -29,22 +29,22 @@ if (isset($_POST['pilota']) && isset($_POST['quota'])) {
     $checkQuery = "SELECT * FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
     $result = $conn->query($checkQuery);
     if ($result->num_rows > 0) {
-        // L'utente ha già una quota nel carrello, invia un messaggio di avviso
+        // L'utente ha già una quota nel carrello, invia un messaggio di conferma
         echo "quota-gia-selezionata";
     } else {
-
         // Genera un ID univoco per la scommessa
         $scommessaId = substr(md5(uniqid(rand(), true)), 0, 10);
 
         // Prepara e esegui la query di inserimento
         $sql = "INSERT INTO CarrelloProvvisorio (Utente_Username, Scommessa_Id, NominativoPilota, Quota, Importo) VALUES ('$utenteUsername', '$scommessaId','$pilota' ,$quota, 0)";
         if ($conn->query($sql) === TRUE) {
-            echo "Dati inseriti con successo nel database.";
+            echo "quota-inserita-correttamente";
         } else {
             echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
         }
     }
 
+    // Chiudi la connessione al database
     $conn->close();
 } else {
     echo "Errore: Dati mancanti nella richiesta.";

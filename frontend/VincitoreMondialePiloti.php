@@ -135,6 +135,8 @@
                 if (xhr.status === 200) {
                     if (xhr.responseText === "quota-gia-selezionata") {
                         alert("Hai già selezionato una quota nel carrello provvisorio. Per cambiarla, elimina la quota attuale dal carrello e seleziona una nuova.");
+                    } else if (xhr.responseText === "quota-inserita-correttamente") {
+                        alert("La quota è stata inserita correttamente nel carrello!");
                     } else {
                         console.log(xhr.responseText); // Stampa la risposta del server nella console
                         // Aggiungi qui altre azioni se necessario
@@ -143,6 +145,7 @@
                     console.error('Errore durante la richiesta AJAX: ' + xhr.statusText);
                 }
             };
+
 
 
             // Gestisci gli errori

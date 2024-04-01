@@ -4,66 +4,91 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carrello</title>
-<style>  body {
-        font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-    }
-    .scommetti-input {
-        width: 80px;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-    .action-cell {
-        text-align: center;
-    }
-    .scommetti-button {
-        padding: 8px 16px;
-        background-color: #007bff;
-        border: none;
-        border-radius: 4px;
-        color: #fff;
-        cursor: pointer;
-    }
-    .scommetti-button:hover {
-        background-color: #0056b3;
-    }
-    .home-link {
-        display: block;
-        text-align: center;
-        margin-top: 20px;
-        text-decoration: none;
-        color: #333;
-        font-weight: bold;
-    }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+.scommetti-input {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.action-cell {
+    text-align: center;
+}
+.scommetti-button, .elimina-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s ease-in-out;
+}
+.scommetti-button {
+    background-color: #007bff;
+    color: #fff;
+}
+.scommetti-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+.elimina-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+.elimina-button:hover {
+    background-color: #bd2130;
+    transform: translateY(-2px);
+}
+.scommetti-button:focus, .elimina-button:focus {
+    box-shadow: 0 0 0 2px #007bff;
+}
+.date-cell {
+    white-space: nowrap; /* Impedisce il testo di andare a capo */
+}
+.home-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+.home-link:hover {
+    color: #007bff;
+}
 </style>
 </head>
 <body>
@@ -81,7 +106,7 @@
                 <th>Azione</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="table-body">
             <!-- PHP per recupero dati dal database -->
             <?php
             session_start();
@@ -104,14 +129,17 @@
                 // Array per memorizzare le quote
                 $quote = array();
                 while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
+                    echo "<tr id='row_" . $row["Id"] . "'>";
                     echo "<td>" . $row["NominativoPilota"] . "</td>";
                     echo "<td>" . $row["Quota"] . "</td>";
                     echo "<td> <input type='number' step='0.1' class='scommetti-input' id='importo_" . $row["Id"] . "' oninput='updatePossibleWin(this)' min='1' </td>";
                     echo "<td class='possibile-vittoria'></td>";
                     echo "<td>Aperta</td>";
-                    echo "<td>" . date("Y-m-d") . "</td>";
-                    echo "<td class='action-cell'><button class='scommetti-button' onclick='scommetti(" . $row["Id"] . ", " . $row["Quota"] . ")'>Scommetti</button></td>";
+                    echo "<td class='date-cell'>" . date("Y-m-d") . "</td>";
+                    echo "<td class='action-cell'>";
+                    echo "<button class='scommetti-button' onclick='scommetti(" . $row["Id"] . ", " . $row["Quota"] . ")'>Scommetti</button>";
+                    echo "<button class='elimina-button' onclick='eliminaScommessa(" . $row["Id"] . ")'>Elimina</button>";
+                    echo "</td>";
                     echo "</tr>";
                     // Aggiungi la quota all'array delle quote
                     $quote[$row["Id"]] = $row["Quota"];
@@ -158,7 +186,23 @@
         };
         xhr.send("importo=" + importo + "&id=" + id + "&quota=" + quota);
     }
-
+    // JavaScript per la funzionalità di eliminazione della scommessa
+    function eliminaScommessa(id) {
+        // Invia una richiesta AJAX per eliminare la scommessa dal carrello
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../backend/scommetti.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Gestisci la risposta del server qui
+                console.log(xhr.responseText);
+                // Rimuovi la riga corrispondente dal DOM
+                var rowToRemove = document.getElementById('row_' + id);
+                rowToRemove.parentNode.removeChild(rowToRemove);
+            }
+        };
+        xhr.send("delete_id=" + id);
+    }
 </script>
 
 </body>
