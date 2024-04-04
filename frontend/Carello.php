@@ -147,7 +147,24 @@ th {
                 // Trasforma l'array PHP in un array JavaScript
                 echo "<script>var quote = " . json_encode($quote) . ";</script>";
             } else {
-                echo "<tr><td colspan='7'>Nessun elemento nel carrello provvisorio.</td></tr>";
+                $queryDatiCarrello = "SELECT * FROM Carrello WHERE Utente_Username = '$utenteUsername'";
+                $result = $conn->query($queryDatiCarrello);
+                if ($result && $result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr id='row_" . $row["Id"] . "'>";
+                        echo "<td>" . $row["NominativoPilota"] . "</td>";
+                        echo "<td>" . $row["Quota"] . "</td>";
+                        echo "<td class='possibile-vittoria'></td>";
+                        echo "<td>Aperta</td>";
+                        echo "<td class='date-cell'>" . date("Y-m-d") . "</td>";
+                        echo "<td class='action-cell'>";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>Nessun elemento nel carrello provvisorio.</td></tr>";
+                }
             }
             $conn->close();
             ?>
@@ -176,40 +193,43 @@ th {
         
         // Invia i dati al server per l'elaborazione della scommessa utilizzando AJAX
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../backend/scommetti.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Gestisci la risposta del server qui
-                console.log(xhr.responseText);
-                // Chiedi all'utente se desidera confermare la scommessa
-                var conferma = confirm("Vuoi confermare la scommessa nel carrello?");
-                if (conferma) {
-                    // Disabilita il pulsante "Scommetti" e lascia i dati della schedina
-                    var button = document.getElementById('scommetti_button_' + id);
-                    button.disabled = true;
-                    button.innerText = 'Confermata';
-                    
-                    // Nascondi il pulsante "Elimina"
-                    var deleteButton = document.querySelector('#row_' + id + ' .elimina-button');
-                    deleteButton.style.display = 'none';
-
-                    // Invia lo stato della schedina al server
+            if (xhr.readyState === 4 && xhr.status === 200){
+                confermato = mostraScommessaConfermata(id);
+                if(confermato == true){
                     var xhrState = new XMLHttpRequest();
                     xhrState.open("POST", "../backend/scommetti.php", true);
                     xhrState.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xhrState.send("id=" + id + "&stato=true"); // Invia lo stato TRUE al server
-                } else {
-                    // Rimuovi la riga corrispondente dal carrello provvisorio
-                    var rowToRemove = document.getElementById('row_' + id);
-                    rowToRemove.parentNode.removeChild(rowToRemove);
                 }
             }
         };
+        xhr.open("POST", "../backend/scommetti.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send("importo=" + importo + "&id=" + id + "&quota=" + quota);
     }
 
 
+    function mostraScommessaConfermata(id) {
+            // Chiedi all'utente se desidera confermare la scommessa
+            var conferma = confirm("Vuoi confermare la scommessa nel carrello?");
+            if (conferma) {
+                // Disabilita il pulsante "Scommetti" e lascia i dati della schedina
+                var button = document.getElementById('scommetti_button_' + id);
+                button.disabled = true;
+                button.innerText = 'Confermata';
+                
+                // Nascondi il pulsante "Elimina"
+                var deleteButton = document.querySelector('#row_' + id + ' .elimina-button');
+                deleteButton.style.display = 'none';
+                return true;
+            } else {
+                // Rimuovi la riga corrispondente dal carrello provvisorio
+                var rowToRemove = document.getElementById('row_' + id);
+                rowToRemove.parentNode.removeChild(rowToRemove);
+                return false;
+            }
+    }
 
     // JavaScript - Modifica della funzione eliminaScommessa() per aggiornare lo stato della schedina nel database quando viene eliminata
     function eliminaScommessa(id) {

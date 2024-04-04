@@ -77,7 +77,7 @@
                     // Successo nell'inserimento della scommessa nel carrello
                     echo "Scommessa inserita correttamente nel carrello!";
                     // eliminare la scommessa dal carrello provvisorio solo se l'utente conferma
-                    if (isset($_POST['conferma']) && $_POST['conferma'] == 'true') {
+//                    if (isset($_POST['conferma']) && $_POST['conferma'] == 'true') {
                         // Query per eliminare la scommessa dal carrello provvisorio
                         $query_delete_carrello_provvisorio = "DELETE FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
                         if ($conn->query($query_delete_carrello_provvisorio) === TRUE) {
@@ -87,7 +87,7 @@
                             // Errore nell'eliminazione della scommessa dal carrello provvisorio
                             echo "Errore: " . $query_delete_carrello_provvisorio . "<br>" . $conn->error;
                         }
-                    }
+  //                  }
 
                 } else {
                     // Errore nell'esecuzione della query per inserire la scommessa nel carrello
@@ -125,15 +125,15 @@
         echo "<tbody>";
 
         // Itera sui risultati e stampa ogni riga del carrello principale
-        while ($row_carrello_principale = $result_carrello_principale->fetch_assoc()) {
+        while ($result_carrello_principale->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row_carrello_principale["NominativoPilota"] . "</td>";
-            echo "<td>" . $row_carrello_principale["Quota"] . "</td>";
-            echo "<td>" . $row_carrello_principale["Importo"] . "</td>";
+            echo "<td>" . $result_carrello_principale["NominativoPilota"] . "</td>";
+            echo "<td>" . $result_carrello_principale["Quota"] . "</td>";
+            echo "<td>" . $result_carrello_principale["Importo"] . "</td>";
             // Calcola la possibile vittoria se necessario
-            echo "<td>" . $row_carrello_principale["PossibileVittoria"] . "</td>";
-            echo "<td>" . $row_carrello_principale["Stato"] . "</td>";
-            echo "<td>" . $row_carrello_principale["Data"] . "</td>";
+            echo "<td>" . $result_carrello_principale["PossibileVittoria"] . "</td>";
+            echo "<td>" . $result_carrello_principale["Stato"] . "</td>";
+            echo "<td>" . $result_carrello_principale["Data"] . "</td>";
             // Mostra solo il pulsante "Confermata" nella colonna Azione
             echo "<td><button class='confermata-button' onclick='confermaScommessa(" . $row_carrello_principale["Id"] . ")'>Confermata</button></td>";
             echo "</tr>";
