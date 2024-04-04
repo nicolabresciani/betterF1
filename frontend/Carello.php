@@ -137,7 +137,7 @@ th {
                     echo "<td>Aperta</td>";
                     echo "<td class='date-cell'>" . date("Y-m-d") . "</td>";
                     echo "<td class='action-cell'>";
-                    echo "<button class='scommetti-button' onclick='scommetti(" . $row["Id"] . ", " . $row["Quota"] . ")'>Scommetti</button>";
+                    echo "<button id='scommetti_button_" . $row["Id"] . "' class='scommetti-button' onclick='scommetti(" . $row["Id"] . ", " . $row["Quota"] . ")'>Scommetti</button>";
                     echo "<button class='elimina-button' onclick='eliminaScommessa(" . $row["Id"] . ")'>Elimina</button>";
                     echo "</td>";
                     echo "</tr>";
@@ -182,27 +182,51 @@ th {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Gestisci la risposta del server qui
                 console.log(xhr.responseText);
+                // Chiedi all'utente se desidera confermare la scommessa
+                var conferma = confirm("Vuoi confermare la scommessa nel carrello?");
+                if (conferma) {
+                    // Disabilita il pulsante "Scommetti" e lascia i dati della schedina
+                    var button = document.getElementById('scommetti_button_' + id);
+                    button.disabled = true;
+                    button.innerText = 'Confermata';
+                    
+                    // Nascondi il pulsante "Elimina"
+                    var deleteButton = document.querySelector('#row_' + id + ' .elimina-button');
+                    deleteButton.style.display = 'none';
+
+                    // Invia lo stato della schedina al server
+                    var xhrState = new XMLHttpRequest();
+                    xhrState.open("POST", "../backend/scommetti.php", true);
+                    xhrState.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhrState.send("id=" + id + "&stato=true"); // Invia lo stato TRUE al server
+                } else {
+                    // Rimuovi la riga corrispondente dal carrello provvisorio
+                    var rowToRemove = document.getElementById('row_' + id);
+                    rowToRemove.parentNode.removeChild(rowToRemove);
+                }
             }
         };
         xhr.send("importo=" + importo + "&id=" + id + "&quota=" + quota);
     }
-    // JavaScript per la funzionalità di eliminazione della scommessa
+
+
+
+    // JavaScript - Modifica della funzione eliminaScommessa() per aggiornare lo stato della schedina nel database quando viene eliminata
     function eliminaScommessa(id) {
-        // Invia una richiesta AJAX per eliminare la scommessa dal carrello
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../backend/scommetti.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Gestisci la risposta del server qui
-                console.log(xhr.responseText);
+        // Invia una richiesta AJAX per aggiornare lo stato della schedina nel database
+        var xhrState = new XMLHttpRequest();
+        xhrState.open("POST", "../backend/scommetti.php", true);
+        xhrState.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhrState.onreadystatechange = function() {
+            if (xhrState.readyState === 4 && xhrState.status === 200) {
                 // Rimuovi la riga corrispondente dal DOM
                 var rowToRemove = document.getElementById('row_' + id);
                 rowToRemove.parentNode.removeChild(rowToRemove);
             }
         };
-        xhr.send("delete_id=" + id);
+        xhrState.send("id=" + id + "&stato=false"); // Invia lo stato FALSE al server
     }
+
 </script>
 
 </body>

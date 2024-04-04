@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /www/api/
+
+# Reindirizzamento per DatiUtente.php con ID
+RewriteRule ^DatiUtente/(\d+)/?$ DatiUtente.php?id=$1 [L]
+
+# Reindirizzamento per Movimenti.php con ID
+RewriteRule ^DatiUtente/Movimenti/(\d+)/?$ Movimenti.php?id=$1 [L]
+
+# Reindirizzamento per DatiUtente.php
+RewriteRule ^DatiUtente/?$ DatiUtente.php [L]
+
+# Reindirizzamento per DatiUtente.php/Movimenti
+RewriteRule ^DatiUtente/Movimenti/?$ Movimenti.php [L]

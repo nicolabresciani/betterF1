@@ -79,6 +79,7 @@ CREATE TABLE Carrello (
     Utente_Username VARCHAR(255),
     Quota DECIMAL(10,2),
     Importo DECIMAL(10,2),
+    Stato BOOLEAN,
     FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id_Scommessa)
 );
 
