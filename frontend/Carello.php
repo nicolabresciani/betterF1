@@ -147,20 +147,22 @@ th {
                 // Trasforma l'array PHP in un array JavaScript
                 echo "<script>var quote = " . json_encode($quote) . ";</script>";
             } else {
+                $query = "SELECT  NominativoPilota FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
                 $queryDatiCarrello = "SELECT * FROM Carrello WHERE Utente_Username = '$utenteUsername'";
                 $result = $conn->query($queryDatiCarrello);
                 if ($result && $result->num_rows > 0) {
                     $row = $result->fetch_assoc();
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr id='row_" . $row["Id"] . "'>";
-                        echo "<td>" . $row["NominativoPilota"] . "</td>";
-                        echo "<td>" . $row["Quota"] . "</td>";
-                        echo "<td class='possibile-vittoria'></td>";
-                        echo "<td>Aperta</td>";
-                        echo "<td class='date-cell'>" . date("Y-m-d") . "</td>";
-                        echo "<td class='action-cell'>";
-                        echo "</td>";
-                        echo "</tr>";
+                    echo "<td>" . $row["NominativoPilota"] . "</td>";
+                    echo "<td>" . $row["Quota"] . "</td>";
+                    echo "<td> <input type='number' step='0.1' class='scommetti-input' id='importo_" . $row["Id"] . "' oninput='updatePossibleWin(this)' min='1' </td>";
+                    echo "<td class='possibile-vittoria'></td>";
+                    echo "<td>Aperta</td>";
+                    echo "<td class='date-cell'>" . date("Y-m-d") . "</td>";
+                    echo "<td class='action-cell'>";
+                    echo "</td>";
+                    echo "</tr>";
                     }
                 } else {
                     echo "<tr><td colspan='7'>Nessun elemento nel carrello provvisorio.</td></tr>";

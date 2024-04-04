@@ -79,7 +79,7 @@
                     // eliminare la scommessa dal carrello provvisorio solo se l'utente conferma
 //                    if (isset($_POST['conferma']) && $_POST['conferma'] == 'true') {
                         // Query per eliminare la scommessa dal carrello provvisorio
-                        $query_delete_carrello_provvisorio = "DELETE FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
+      //da provare questa riga cancellata$query_delete_carrello_provvisorio = "DELETE FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
                         if ($conn->query($query_delete_carrello_provvisorio) === TRUE) {
                             // Successo nell'eliminazione della scommessa dal carrello provvisorio
                             echo "Scommessa eliminata correttamente dal carrello provvisorio!";
