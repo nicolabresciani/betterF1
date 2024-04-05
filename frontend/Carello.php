@@ -147,7 +147,7 @@ th {
                 // Trasforma l'array PHP in un array JavaScript
                 echo "<script>var quote = " . json_encode($quote) . ";</script>";
             } else {
-                $query = "SELECT  NominativoPilota FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
+                //$query = "SELECT  NominativoPilota FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
                 $queryDatiCarrello = "SELECT * FROM Carrello WHERE Utente_Username = '$utenteUsername'";
                 $result = $conn->query($queryDatiCarrello);
                 if ($result && $result->num_rows > 0) {
@@ -213,25 +213,34 @@ th {
 
 
     function mostraScommessaConfermata(id) {
-            // Chiedi all'utente se desidera confermare la scommessa
-            var conferma = confirm("Vuoi confermare la scommessa nel carrello?");
-            if (conferma) {
-                // Disabilita il pulsante "Scommetti" e lascia i dati della schedina
-                var button = document.getElementById('scommetti_button_' + id);
-                button.disabled = true;
-                button.innerText = 'Confermata';
-                
-                // Nascondi il pulsante "Elimina"
-                var deleteButton = document.querySelector('#row_' + id + ' .elimina-button');
-                deleteButton.style.display = 'none';
-                return true;
-            } else {
-                // Rimuovi la riga corrispondente dal carrello provvisorio
-                var rowToRemove = document.getElementById('row_' + id);
-                rowToRemove.parentNode.removeChild(rowToRemove);
-                return false;
-            }
+        // Chiedi all'utente se desidera confermare la scommessa
+        var conferma = confirm("Vuoi confermare la scommessa nel carrello?");
+        if (conferma) {
+            // Disabilita il pulsante "Scommetti" e lascia i dati della schedina
+            var button = document.getElementById('scommetti_button_' + id);
+            button.disabled = true;
+            button.innerText = 'Confermata';
+
+            // Nascondi il pulsante "Elimina"
+            var deleteButton = document.querySelector('#row_' + id + ' .elimina-button');
+            deleteButton.style.display = 'none';
+
+            // Inserisci la riga della scommessa confermata nel carrello principale
+            var row = document.getElementById('row_' + id).cloneNode(true);
+            var actionCell = row.querySelector('.action-cell');
+            actionCell.innerHTML = ''; // Rimuovi i pulsanti dall'azione
+            var tableBody = document.getElementById('table-body');
+            tableBody.appendChild(row);
+
+            return true;
+        } else {
+            // Rimuovi la riga corrispondente dal carrello provvisorio
+            var rowToRemove = document.getElementById('row_' + id);
+            rowToRemove.parentNode.removeChild(rowToRemove);
+            return false;
+        }
     }
+
 
     // JavaScript - Modifica della funzione eliminaScommessa() per aggiornare lo stato della schedina nel database quando viene eliminata
     function eliminaScommessa(id) {

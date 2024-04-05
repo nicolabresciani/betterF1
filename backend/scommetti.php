@@ -76,19 +76,6 @@
                 if ($conn->query($query_insert_carrello) === TRUE) {
                     // Successo nell'inserimento della scommessa nel carrello
                     echo "Scommessa inserita correttamente nel carrello!";
-                    // eliminare la scommessa dal carrello provvisorio solo se l'utente conferma
-//                    if (isset($_POST['conferma']) && $_POST['conferma'] == 'true') {
-                        // Query per eliminare la scommessa dal carrello provvisorio
-      //da provare questa riga cancellata$query_delete_carrello_provvisorio = "DELETE FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
-                        if ($conn->query($query_delete_carrello_provvisorio) === TRUE) {
-                            // Successo nell'eliminazione della scommessa dal carrello provvisorio
-                            echo "Scommessa eliminata correttamente dal carrello provvisorio!";
-                        } else {
-                            // Errore nell'eliminazione della scommessa dal carrello provvisorio
-                            echo "Errore: " . $query_delete_carrello_provvisorio . "<br>" . $conn->error;
-                        }
-  //                  }
-
                 } else {
                     // Errore nell'esecuzione della query per inserire la scommessa nel carrello
                     echo "Errore: " . $query_insert_carrello . "<br>" . $conn->error;
