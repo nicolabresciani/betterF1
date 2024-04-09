@@ -73,7 +73,6 @@ CREATE TABLE Carrello (
     Utente_Username VARCHAR(255),
     Quota DECIMAL(10,2),
     Importo DECIMAL(10,2),
-    Stato BOOLEAN,
     FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id_Scommessa)
 );
 
@@ -83,11 +82,10 @@ CREATE TABLE CarrelloProvvisorio (
     Utente_Username VARCHAR(255),
     Scommessa_Id VARCHAR(10),
     NominativoPilota VARCHAR(255),
-    Quota DECIMAL(10,2), 
+    Quota DECIMAL(10,2),
     Importo INT,
     FOREIGN KEY (Utente_Username) REFERENCES Utente(Username)
 );
-
 
 INSERT INTO `Amministratore` (`Username`, `Nome`, `Cognome`, `Password`, `Ruolo`) VALUES ('Nick', 'Nick', 'Nick', 'Nick', 'Amministratore');
 INSERT INTO `SottoAmministratore` (`Username`, `Nome`, `Cognome`, `Password`, `Ruolo`, `Amministratore_Username`) VALUES ('a', 'a', 'a', '0cc175b9c0f1b6a831c399e269772661', 'SottoAmministratore', 'Nick');
