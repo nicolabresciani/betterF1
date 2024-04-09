@@ -84,22 +84,37 @@
         <tbody>
             <?php
             // Nomi dei piloti
-            $piloti = array("Max Verstappen", "Pilota 2", "Pilota 3", "Pilota 4", "Pilota 5", 
-                            "Pilota 6", "Pilota 7", "Pilota 8", "Pilota 9", "Pilota 10", 
-                            "Pilota 11", "Pilota 12", "Pilota 13", "Pilota 14", "Pilota 15", 
-                            "Pilota 16", "Pilota 17", "Pilota 18", "Pilota 19", "Pilota 20");
+            $piloti = array("Max Verstappen", "Sergio Perez", "Charles Leclerc", "Carlos Sainz", "Lewis Hamilton", 
+                            "George Russell","Lando Norris", "Oscar Piastri", "Lance Stroll", "Fernando Alonso", 
+                            "Pierre Gasly", "Esteban Ocon", "Logan Sargeant", "Alexander Albon", "Yuki Tsunoda",
+                            "Daniel Ricciardo", "Zhou Guanyu", "Valtteri Bottas","Nico Hulkenberg", "Kevin Magnussen");
 
             // Calcolo delle quote per la colonna del "Si"
             $quote_si = array();
             for ($i = 0; $i < count($piloti); $i++) {
-                $quote_si[] = round(1 + log($i + 2, count($piloti)) * 49 * 0.9, 2); // Applica uno sconto del 10%
+                if ($i < 10) { // Abbassiamo le quote per i primi 5 piloti
+                    $quote_si[] = round(1 + log($i + 2, count($piloti)) * 49 * 0.38, 2); // Applica uno sconto del 10% e un fattore di 20
+                } else {
+                    $quote_si[] = round(1 + log($i + 2, count($piloti)) * 49 * 0.68, 2); // Manteniamo le quote più alte per i piloti successivi
+                }
             }
+            
+            
 
             // Calcolo delle quote per la colonna del "No"
             $quote_no = array();
-            for ($i = 0; $i < count($piloti); $i++) {
-                $quote_no[] = round(50 - log($i + 2, count($piloti)) * 49 * 0.9, 2); // Applica uno sconto del 10%
+            $numero_piloti = count($piloti);
+            for ($i = 0; $i < $numero_piloti; $i++) {
+                if ($i >= 10) { // Aumentiamo le quote per i piloti dal decimo al ventesimo posto
+                    $quote_no[] = round(1 + log($numero_piloti - $i + 1, $numero_piloti) * 49 * 0.34, 2); // Applica uno sconto del 10%
+                } else {
+                    $quote_no[] = round(50 - log($i + 2, $numero_piloti) * 49 * 0.8, 2); // Manteniamo le quote invariate per i primi nove piloti
+                }
             }
+
+            
+            
+
 
             // Stampa dei piloti e input per le quote dei pulsanti Si/No
             for ($i = 0; $i < count($piloti); $i++) {
@@ -145,9 +160,6 @@
                     console.error('Errore durante la richiesta AJAX: ' + xhr.statusText);
                 }
             };
-
-
-
             // Gestisci gli errori
             xhr.onerror = function() {
                 console.error('Errore durante la richiesta AJAX.');
