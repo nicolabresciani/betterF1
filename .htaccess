@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteRule ^$ /www/frontend/PaginaIniziale.php [R,L]
 
-
+# domani da svolgere questo
 # devo creare un genera stringa per token jwt 
 # così da poter loggare con quel jwt per mostrare soltanto l'utente interessato
 # testare che vada il tutto
