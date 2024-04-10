@@ -5,3 +5,6 @@ RewriteRule ^$ /www/frontend/PaginaIniziale.php [R,L]
 # devo creare un genera stringa per token jwt 
 # così da poter loggare con quel jwt per mostrare soltanto l'utente interessato
 # testare che vada il tutto
+
+
+#quando scommetti controllare l'importo con quello disponibile
