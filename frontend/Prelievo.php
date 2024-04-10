@@ -74,7 +74,7 @@
         <label for="cvv">CVV:</label>
         <input type="text" name="cvv" required>
 
-        <input type="submit" value="Effettua Deposito">
+        <input type="submit" value="Effettua Prelievo">
         <a href="Home.php">torna alla home</a>
     </form>
 </body>
