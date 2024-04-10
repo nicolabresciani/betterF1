@@ -31,7 +31,7 @@ $stmt = $conn->prepare($sql);
 if ($stmt) {
     $stmt->bind_param("s", $user_input);
     if ($stmt->execute()) {
-        echo json_encode(array("success" => true, "message" => "User suspended successfully"));
+        echo json_encode(array("success" => true, "message" => "User activate successfully"));
     } else {
         echo json_encode(array("success" => false, "message" => "Error suspending user"));
     }
