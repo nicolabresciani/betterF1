@@ -40,7 +40,7 @@ while ($rowUtente = $resultUtenti->fetch_assoc()) {
     $nome = isset($rowUtente["Nome"]) ? $rowUtente["Nome"] : "";
     $cognome = isset($rowUtente["Cognome"]) ? $rowUtente["Cognome"] : "";
     $dataDiNascita = isset($rowUtente["DataDiNascita"]) ? $rowUtente["DataDiNascita"] : "";
-    $luogoDiNascita = isset($rowUtente["LuogoDiNascita"]) ? $rowUtente["LuogoDiNascita"] : "";
+    $luogoDiNascita = isset($rowUtente["LuogoNascita"]) ? $rowUtente["LuogoNascita"] : "";
     $cellulare = isset($rowUtente["Cellulare"]) ? $rowUtente["Cellulare"] : "";
     $email = isset($rowUtente["Mail"]) ? $rowUtente["Mail"] : "";
 
@@ -89,7 +89,7 @@ while ($rowUtente = $resultUtenti->fetch_assoc()) {
         "nome" => $nome,
         "cognome" => $cognome,
         "dataDiNascita" => $dataDiNascita,
-        "luogoDiNascita" => $luogoDiNascita,
+        "LuogoNascita" => $luogoDiNascita,
         "cellulare" => $cellulare,
         "email" => $email,
         "saldo" => $saldo,
