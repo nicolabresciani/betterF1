@@ -36,6 +36,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $importo = $_POST['importo'];
         $quota = $_POST['quota'];
 
+        // Query per ottenere il saldo dell'utente
+        $query_saldo = "SELECT Saldo FROM Portafoglio WHERE Username = '$utenteUsername'";
+        $result_saldo = $conn->query($query_saldo);
+
+        if ($result_saldo->num_rows > 0) {
+            $row_saldo = $result_saldo->fetch_assoc();
+            $saldo_disponibile = $row_saldo['Saldo'];
+
+            // Controlla se l'importo da scommettere è disponibile
+            if ($importo > $saldo_disponibile) {
+                echo "Errore: Saldo insufficiente per effettuare la scommessa.";
+                exit(); // Interrompi l'esecuzione dello script
+            } else {
+                // Calcola il nuovo saldo dopo la scommessa
+                $nuovo_saldo = $saldo_disponibile - $importo;
+
+                // Query per aggiornare il saldo nel database
+                $query_aggiorna_saldo = "UPDATE Portafoglio SET Saldo = $nuovo_saldo WHERE Username = '$utenteUsername'";
+
+                // Esegui la query di aggiornamento del saldo
+                if ($conn->query($query_aggiorna_saldo) === TRUE) {
+                    echo "Saldo aggiornato correttamente!";
+                } else {
+                    echo "Errore nell'aggiornamento del saldo: " . $conn->error;
+                    exit(); // Interrompi l'esecuzione dello script
+                }
+            }
+        } else {
+            echo "Errore nel recupero del saldo dell'utente.";
+            exit(); // Interrompi l'esecuzione dello script
+        }
+
+
         // Verifica se è stata trovata un'ID della scommessa nel carrello provvisorio
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();

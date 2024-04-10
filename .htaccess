@@ -7,8 +7,6 @@ RewriteRule ^$ /www/frontend/PaginaIniziale.php [R,L]
 # testare che vada il tutto
 
 
-#quando scommetti controllare l'importo con quello disponibile
-
 
 
 # If the application is not in the root directory
