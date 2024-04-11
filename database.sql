@@ -58,6 +58,7 @@ CREATE TABLE Scommessa (
     Amministratore_Username VARCHAR(255),
     Scelta VARCHAR(2),
     CampoDiScommessa VARCHAR (255),
+    nominativo  VARCHAR(255),
     FOREIGN KEY (Utente_Username) REFERENCES Utente(Username),
     FOREIGN KEY (Amministratore_Username) REFERENCES Amministratore(Username)
 );

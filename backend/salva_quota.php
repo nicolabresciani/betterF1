@@ -19,6 +19,9 @@ if (isset($_POST['pilota']) && isset($_POST['quota'])) {
     $quota = $_POST['quota'];
     $pilota = $_POST['pilota'];
 
+    // Determina la scelta in base alla quota
+    $scelta = $quota >= 2 ? 'SI' : 'NO';
+
     // Connessione al database
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
@@ -40,6 +43,13 @@ if (isset($_POST['pilota']) && isset($_POST['quota'])) {
         if ($conn->query($sql) === TRUE) {
             echo "quota-inserita-correttamente";
         } else {
+            echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
+        }
+        $aggiunta ="INSERT INTO Scommessa (Id_Scommessa, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Quota_Id, Amministratore_Username, Scelta, CampoDiScommessa, nominativo) 
+                VALUES ('$scommessaId', 0, 0, 'Attivo', NOW(), '$utenteUsername', NULL, NULL, '$scelta', 'Vincitore Mondiale Piloti', '$pilota')";
+        if($conn -> query($aggiunta) == TRUE){
+            echo "quota inserita";
+        }else{
             echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
         }
     }
