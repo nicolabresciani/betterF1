@@ -122,6 +122,46 @@
 
     <a href="../frontend/Home.php" class="home-link">Torna alla pagina Home</a>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('button.si-button, button.no-button');
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Recupera i dati dalla selezione
+            var pilota = this.getAttribute('data-pilota');
+            var quota = this.getAttribute('data-quote');
+
+            // Crea una richiesta AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../backend/salva_quotaCostruttori.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Gestione della risposta AJAX
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    if (xhr.responseText === "quota-gia-selezionata") {
+                        alert("Hai già selezionato una quota nel carrello provvisorio. Per cambiarla, elimina la quota attuale dal carrello e seleziona una nuova.");
+                    } else if (xhr.responseText === "quota-inserita-correttamente") {
+                        alert("La quota è stata inserita correttamente nel carrello!");
+                    } else {
+                        console.log(xhr.responseText); // Stampa la risposta del server nella console
+                        // Aggiungi qui altre azioni se necessario
+                    }
+                } else {
+                    console.error('Errore durante la richiesta AJAX: ' + xhr.statusText);
+                }
+            };
+            // Gestisci gli errori
+            xhr.onerror = function() {
+                console.error('Errore durante la richiesta AJAX.');
+            };
+
+            // Invia i dati al server
+            xhr.send('pilota=' + encodeURIComponent(pilota) + '&quota=' + encodeURIComponent(quota));
+        });
+    });
+});
+</script>
 
 </body>
 </html>

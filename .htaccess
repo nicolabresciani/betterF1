@@ -13,13 +13,13 @@ RewriteRule ^$ /www/frontend/PaginaIniziale.php [R,L]
 # Replace /www with / if your application is at the root of your domain
 
 # If the request is for the root directory
-#RewriteRule ^$ public/ [L]
+RewriteRule ^$ public/ [L]
 
 # If the request is for a file or directory that exists
-#RewriteCond %{REQUEST_FILENAME} -f [OR]
-#RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
 # Do not redirect the request
-#RewriteRule ^ - [L]
+RewriteRule ^ - [L]
 
 # If the request is for a file or directory that does not exist
-#RewriteRule ^(.*)$ public/index.php [L]
+RewriteRule ^(.*)$ public/index.php [L]

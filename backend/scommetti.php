@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $scommessaId = $row['Scommessa_Id'];
 
             // Query per inserire la scommessa nel database
-            $query_insert_scommessa = "INSERT INTO Scommessa (Id_Scommessa, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Quota_Id, Amministratore_Username) 
+            $query_insert_scommessa = "INSERT INTO Scommessa (Id_Scommessa, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Quota_Id, Amministratore_Username, Scelta, CampoDiScommessa) 
                                 VALUES ('$scommessaId', $importo, '0', 'Aperta', CURDATE(), '$utenteUsername', $quota, '$amministratoreUsername')";
 
 

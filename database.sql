@@ -56,6 +56,8 @@ CREATE TABLE Scommessa (
     Utente_Username VARCHAR(255),
     Quota_Id DECIMAL(10,2),
     Amministratore_Username VARCHAR(255),
+    Scelta VARCHAR(2),
+    CampoDiScommessa VARCHAR (255),
     FOREIGN KEY (Utente_Username) REFERENCES Utente(Username),
     FOREIGN KEY (Amministratore_Username) REFERENCES Amministratore(Username)
 );
@@ -91,4 +93,4 @@ INSERT INTO `Amministratore` (`Username`, `Nome`, `Cognome`, `Password`, `Ruolo`
 INSERT INTO `SottoAmministratore` (`Username`, `Nome`, `Cognome`, `Password`, `Ruolo`, `Amministratore_Username`) VALUES ('a', 'a', 'a', '0cc175b9c0f1b6a831c399e269772661', 'SottoAmministratore', 'Nick');
 INSERT INTO `Utente` (`Id`, `Username`, `Nome`, `Cognome`, `Password`, `DataDiNascita`, `LuogoNascita`, `Cellulare`, `Mail`, `Ruolo`, `CodiceValidazione`, `Stato`)
 VALUES ('1', 'b', 'b', 'b', '92eb5ffee6ae2fec3ad71c777531578f', '2002-03-04', 'Bergamo', '3283993729', 'b@b.com', 'Utente Normale', '222222', 'attivo');
-
+INSERT INTO `Portafoglio` (`Username` , `Stato`, `Saldo`) VALUES ('b', 1, 0.00);

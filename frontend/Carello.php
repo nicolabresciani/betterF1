@@ -82,7 +82,6 @@
             </tr>
         </thead>
         <tbody>
-            <!-- PHP per recupero dati dal database -->
             <?php
             session_start();
             $servername = "localhost";
