@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vincitore Mondiale Piloti</title>
+<title>Primo Ritirato</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -71,7 +71,7 @@
 <body>
 
 <div class="container">
-    <h1>Vincitore Mondiale Piloti</h1>
+    <h1>Primo Ritirato</h1>
 
     <table>
         <thead>

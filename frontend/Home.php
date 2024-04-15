@@ -136,6 +136,9 @@ if ($resultSaldo->num_rows > 0) {
             <form action="../frontend/PrimoRitirato.php" method="post">
                 <button type="submit">primo ritirato</button>
             </form>
+            <form action="../frontend/PrimoPitStop.php" method="post">
+                <button type="submit">primo pit-stop</button>
+            </form>
         </div>
 
 
