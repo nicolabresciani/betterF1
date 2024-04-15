@@ -1,7 +1,9 @@
 -- Creazione del database
 
-CREATE DATABASE betterF1
 
+DROP DATABASE IF EXISTS betterF1;
+CREATE DATABASE betterF1;
+USE betterF1;
 
 CREATE TABLE Portafoglio ( Username VARCHAR(255) PRIMARY KEY, Stato VARCHAR(255), Saldo DECIMAL(10, 2) ); 
 

@@ -14,13 +14,11 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Verifica se è stato inviato un POST con i dati del pilota e della quota
-if (isset($_POST['pilota']) && isset($_POST['quota'])) {
+if (isset($_POST['pilota']) && isset($_POST['quota']) && isset($_POST['scelta'])) {
     $utenteUsername = $_SESSION['username'];
     $quota = $_POST['quota'];
     $pilota = $_POST['pilota'];
-
-    // Determina la scelta in base alla quota
-    $scelta = $quota >= 2 ? 'SI' : 'NO';
+    $scelta = $_POST['scelta']; // Si o No, basato sul pulsante cliccato
 
     // Connessione al database
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -45,9 +43,11 @@ if (isset($_POST['pilota']) && isset($_POST['quota'])) {
         } else {
             echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
         }
-        $aggiunta ="INSERT INTO Scommessa (Id_Scommessa, ImportoScommesso, ImportoVinto, StatoScommessa, Data, Utente_Username, Quota_Id, Amministratore_Username, Scelta, CampoDiScommessa, nominativo) 
-                VALUES ('$scommessaId', 0, 0, 'Attivo', NOW(), '$utenteUsername', NULL, NULL, '$scelta', 'Vincitore Mondiale Piloti', '$pilota')";
-        if($conn -> query($aggiunta) == TRUE){
+        
+        // Inserisci la nuova scommessa nella tabella Scommessa
+        $aggiunta ="INSERT INTO Scommessa (Scelta, CampoDiScommessa, nominativo) 
+                VALUES ('$scelta', 'Vincitore Mondiale Piloti', '$pilota')";
+        if($conn->query($aggiunta) === TRUE){
             echo "quota inserita";
         }else{
             echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
