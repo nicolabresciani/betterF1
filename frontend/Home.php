@@ -130,6 +130,9 @@ if ($resultSaldo->num_rows > 0) {
             <form action="../frontend/VincitoreMondialeScuderia.php" method="post">
                 <button type="submit">vincitore mondiale scuderia</button>
             </form>
+            <form action="../frontend/MiglioreGruppo.php" method="post">
+                <button type="submit">migliore del gruppo</button>
+            </form>
         </div>
 
 
