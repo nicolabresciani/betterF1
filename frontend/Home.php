@@ -133,6 +133,9 @@ if ($resultSaldo->num_rows > 0) {
             <form action="../frontend/MiglioreGruppo.php" method="post">
                 <button type="submit">migliore del gruppo</button>
             </form>
+            <form action="../frontend/PrimoRitirato.php" method="post">
+                <button type="submit">primo ritirato</button>
+            </form>
         </div>
 
 

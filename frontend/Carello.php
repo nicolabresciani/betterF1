@@ -138,6 +138,7 @@
         var possibileVittoria = (importo * quota).toFixed(2); // Limita la vittoria a due decimali
         input.parentNode.nextElementSibling.innerHTML = possibileVittoria;
     }
+
     function scommetti(id, quota) {
         var importo = parseFloat(document.getElementById('importo_' + id).value); // Converti l'importo in un numero
         var possibileVittoria = (importo * quota).toFixed(2); // Limita la vittoria a due decimali
@@ -147,14 +148,27 @@
         xhr.open("POST", "../backend/scommetti.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Gestisci la risposta del server qui
-                console.log(xhr.responseText);
-                alert("scomessa andata a buon fine");
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // Risposta ricevuta correttamente dal server
+                    var response = xhr.responseText;
+                    if (response.includes("Saldo aggiornato")) {
+                        // Scommessa andata a buon fine
+                        alert("Scommessa effettuata con successo. Possibile vincita: " + possibileVittoria);
+                    } else {
+                        // Errore nel processo di scommessa
+                        alert("Errore: " + response);
+                    }
+                } else {
+                    // Errore nella richiesta al server
+                    alert("Errore nella richiesta al server. Si prega di riprovare più tardi.");
+                }
             }
         };
         xhr.send("importo=" + importo + "&id=" + id + "&quota=" + quota);
     }
+
+
 </script>
 
 </script>

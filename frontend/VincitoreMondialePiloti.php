@@ -111,11 +111,6 @@
                     $quote_no[] = round(50 - log($i + 2, $numero_piloti) * 49 * 0.8, 2); // Manteniamo le quote invariate per i primi nove piloti
                 }
             }
-
-            
-            
-
-
             // Stampa dei piloti e input per le quote dei pulsanti Si/No
             for ($i = 0; $i < count($piloti); $i++) {
                 echo "<tr>";
