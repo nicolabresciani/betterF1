@@ -112,8 +112,8 @@
             for ($i = 0; $i < count($scuderie); $i++) {
                 echo "<tr>";
                 echo "<td>$scuderie[$i]</td>";
-                echo "<td><button class='si-button' data-scuderia='$scuderie[$i]' data-quote='$quote_si[$i]'>$quote_si[$i]</button></td>";
-                echo "<td><button class='no-button' data-scuderia='$scuderie[$i]' data-quote='$quote_no[$i]'>$quote_no[$i]</button></td>";
+                echo "<td><button class='si-button' data-pilota='$scuderie[$i]' data-quote='$quote_si[$i]' data-scelta='SI'>$quote_si[$i]</button></td>";
+                echo "<td><button class='no-button' data-pilota='$scuderie[$i]' data-quote='$quote_no[$i]' data-scelta='NO'>$quote_no[$i]</button></td>";
                 echo "</tr>";
             }
             ?> 
@@ -124,12 +124,14 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+    // Modifica del codice JavaScript per includere il valore di data-scelta nella richiesta AJAX
     var buttons = document.querySelectorAll('button.si-button, button.no-button');
     buttons.forEach(function(button) {
         button.addEventListener('click', function() {
             // Recupera i dati dalla selezione
-            var pilota = this.getAttribute('data-pilota');
+            var scuderia = this.getAttribute('data-pilota');
             var quota = this.getAttribute('data-quote');
+            var scelta = this.getAttribute('data-scelta'); // Aggiunta: recupera il valore di data-scelta
 
             // Crea una richiesta AJAX
             var xhr = new XMLHttpRequest();
@@ -156,8 +158,8 @@
                 console.error('Errore durante la richiesta AJAX.');
             };
 
-            // Invia i dati al server
-            xhr.send('pilota=' + encodeURIComponent(pilota) + '&quota=' + encodeURIComponent(quota));
+            // Invia i dati al server, incluso il valore di scelta
+            xhr.send('scuderia=' + encodeURIComponent(scuderia) + '&quota=' + encodeURIComponent(quota) + '&scelta=' + encodeURIComponent(scelta));
         });
     });
 });

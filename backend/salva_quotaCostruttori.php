@@ -14,10 +14,11 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Verifica se è stato inviato un POST con i dati del pilota e della quota
-if (isset($_POST['pilota']) && isset($_POST['quota'])) {
+if (isset($_POST['scuderia']) && isset($_POST['quota']) && isset($_POST['scelta'])) {
     $utenteUsername = $_SESSION['username'];
     $quota = $_POST['quota'];
-    $pilota = $_POST['pilota'];
+    $scuderie = $_POST['scuderia'];
+    $scelta = $_POST['scelta']; // Si o No, basato sul pulsante cliccato
 
     // Connessione al database
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -36,10 +37,18 @@ if (isset($_POST['pilota']) && isset($_POST['quota'])) {
         $scommessaId = substr(md5(uniqid(rand(), true)), 0, 10);
 
         // Prepara e esegui la query di inserimento
-        $sql = "INSERT INTO CarrelloProvvisorio (Utente_Username, Scommessa_Id, NominativoPilota, Quota, Importo) VALUES ('$utenteUsername', '$scommessaId','$pilota' ,$quota, 0)";
+        $sql = "INSERT INTO CarrelloProvvisorio (Utente_Username, Scommessa_Id, NominativoPilota, Quota, Importo) VALUES ('$utenteUsername', '$scommessaId','$scuderie' ,$quota, 0)";
         if ($conn->query($sql) === TRUE) {
             echo "quota-inserita-correttamente";
         } else {
+            echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
+        }   
+        // Inserisci la nuova scommessa nella tabella Scommessa
+        $aggiunta ="INSERT INTO Scommessa (Scelta, CampoDiScommessa, nominativo) 
+                VALUES ('$scelta', 'Vincitore Mondiale scuderie', '$scuderie')";
+        if($conn->query($aggiunta) === TRUE){
+            echo "quota inserita";
+        }else{
             echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
         }
     }
