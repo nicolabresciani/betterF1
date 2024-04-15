@@ -42,8 +42,7 @@ if (isset($_POST['pilota']) && isset($_POST['quota']) && isset($_POST['scelta'])
             echo "quota-inserita-correttamente";
         } else {
             echo "Errore durante l'inserimento dei dati nel database: " . $conn->error;
-        }
-        
+        }   
         // Inserisci la nuova scommessa nella tabella Scommessa
         $aggiunta ="INSERT INTO Scommessa (Scelta, CampoDiScommessa, nominativo) 
                 VALUES ('$scelta', 'Vincitore Mondiale Piloti', '$pilota')";

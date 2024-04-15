@@ -26,61 +26,66 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Connessione fallita: " . $conn->connect_error);
     }
 
-    // Query per ottenere il saldo dell'utente
-    $query_saldo = "SELECT Saldo FROM Portafoglio WHERE Username = '$utenteUsername'";
-    $result_saldo = $conn->query($query_saldo);
+    // Verifica se i dati POST sono stati inviati correttamente
+    if(isset($_POST['importo']) && isset($_POST['quota'])) {
+        // Definizione delle variabili
+        $importo = $_POST['importo'];
+        $quota = $_POST['quota'];
 
-    if ($result_saldo->num_rows > 0) {
-        $row_saldo = $result_saldo->fetch_assoc();
-        $saldo_disponibile = $row_saldo['Saldo'];
+        // Query per ottenere il saldo dell'utente
+        $query_saldo = "SELECT Saldo FROM Portafoglio WHERE Username = '$utenteUsername'";
+        $result_saldo = $conn->query($query_saldo);
 
-        // Controlla se l'importo da scommettere è disponibile
-        if ($importo > $saldo_disponibile) {
-            echo "Errore: Saldo insufficiente per effettuare la scommessa.";
-            exit(); // Interrompi l'esecuzione dello script
-        } else {
-            // Calcola il nuovo saldo dopo la scommessa
-            $nuovo_saldo = $saldo_disponibile - $importo;
+        if ($result_saldo->num_rows > 0) {
+            $row_saldo = $result_saldo->fetch_assoc();
+            $saldo_disponibile = $row_saldo['Saldo'];
 
-            // Query per aggiornare il saldo nel database
-            $query_aggiorna_saldo = "UPDATE Portafoglio SET Saldo = $nuovo_saldo WHERE Username = '$utenteUsername'";
-
-            // Esegui la query di aggiornamento del saldo
-            if ($conn->query($query_aggiorna_saldo) === TRUE) {
-                echo "Saldo aggiornato correttamente!";
-            } else {
-                echo "Errore nell'aggiornamento del saldo: " . $conn->error;
+            // Controlla se l'importo da scommettere è disponibile
+            if ($importo > $saldo_disponibile) {
+                echo "Errore: Saldo insufficiente per effettuare la scommessa.";
                 exit(); // Interrompi l'esecuzione dello script
+            } else {
+                // Calcola il nuovo saldo dopo la scommessa
+                $nuovo_saldo = $saldo_disponibile - $importo;
+
+                // Query per aggiornare il saldo nel database
+                $query_aggiorna_saldo = "UPDATE Portafoglio SET Saldo = $nuovo_saldo WHERE Username = '$utenteUsername'";
+
+                // Esegui la query di aggiornamento del saldo
+                if ($conn->query($query_aggiorna_saldo) === TRUE) {
+                    echo "Saldo aggiornato correttamente!";
+                } else {
+                    echo "Errore nell'aggiornamento del saldo: " . $conn->error;
+                    exit(); // Interrompi l'esecuzione dello script
+                }
             }
+        } else {
+            echo "Errore nel recupero del saldo dell'utente.";
+            exit(); // Interrompi l'esecuzione dello script
         }
-    } else {
-        echo "Errore nel recupero del saldo dell'utente.";
-        exit(); // Interrompi l'esecuzione dello script
-    }
 
-    $amministratoreUsername = "Nick"; // Presumo che 'Nick' sia il nome utente dell'amministratore, modificarlo se diverso
-    
-    // Query per ottenere l'ID dell'ultima scommessa inserita dall'utente nel carrello provvisorio
-    $scommessaIdQuery = "SELECT Scommessa_Id FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
-    $result = $conn->query($scommessaIdQuery);
+        $amministratoreUsername = "Nick"; // Presumo che 'Nick' sia il nome utente dell'amministratore, modificarlo se diverso
+        
+        // Query per ottenere l'ID dell'ultima scommessa inserita dall'utente nel carrello provvisorio
+        $scommessaIdQuery = "SELECT Scommessa_Id FROM CarrelloProvvisorio WHERE Utente_Username = '$utenteUsername'";
+        $result = $conn->query($scommessaIdQuery);
 
-    // Verifica se è stata trovata un'ID della scommessa nel carrello provvisorio
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $scommessaId = $row['Scommessa_Id'];
-
-        // Verifica se i dati POST sono stati inviati correttamente
-        if(isset($_POST['importo']) && isset($_POST['quota'])) {
-            // Definizione delle variabili
-            $importo = $_POST['importo'];
-            $quota = $_POST['quota'];
+        // Verifica se è stata trovata un'ID della scommessa nel carrello provvisorio
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $scommessaId = $row['Scommessa_Id'];
+            
 
             // Query per aggiornare la quota e l'importo dell'ultima scommessa
             $query_update_scommessa = "UPDATE Scommessa 
-                                       SET Id_Scommessa = $scommessaId,  ImportoScommesso = $importo, 
-                                       ImportoVinto = 0, StatoScommessa = 'attivo', Data = getCurrentDate(), 
-                                       Utente_Username = $utenteUsername, Quota_Id = $quota, 
-                                       Amministratore_Username =$amministratoreUsername";
+                                    SET Id_Scommessa = COALESCE(Id_Scommessa, '$scommessaId'),
+                                        ImportoScommesso = COALESCE(ImportoScommesso, $importo),
+                                        ImportoVinto = COALESCE(ImportoVinto, 0),
+                                        StatoScommessa = COALESCE(StatoScommessa, 'attivo'),
+                                        Data = COALESCE(Data, NOW()),
+                                        Utente_Username = COALESCE(Utente_Username, '$utenteUsername'),
+                                        Quota_Id = COALESCE(Quota_Id, $quota),
+                                        Amministratore_Username = COALESCE(Amministratore_Username, '$amministratoreUsername')";
 
             // Esecuzione della query per aggiornare la scommessa
             if ($conn->query($query_update_scommessa) === TRUE) {
@@ -110,12 +115,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 echo "Errore: " . $query_update_scommessa . "<br>" . $conn->error;
             }
         } else {
-            // Messaggio di errore se i dati POST non sono stati inviati correttamente
-            echo "Errore: Dati POST non ricevuti correttamente.";
+            // Errore nel recupero dell'ID della scommessa
+            echo "Errore: Nessuna scommessa trovata nel carrello provvisorio per l'utente.";
         }
     } else {
-        // Errore nel recupero dell'ID della scommessa
-        echo "Errore: Nessuna scommessa trovata nel carrello provvisorio per l'utente.";
+        // Messaggio di errore se i dati POST non sono stati inviati correttamente
+        echo "Errore: Dati POST non ricevuti correttamente.";
     }
 
     // Chiudi la connessione
