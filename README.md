@@ -8,11 +8,9 @@ target: centri scommesse di piccole dimensioni
 - Gli utenti possono registrarsi fornendo le informazioni richieste ( username, password, mail, cell) e (nome, cognome, luogo di nascita, anno di nascita)    "(svolto)"
 - Gli utenti possono accedere utilizzando le loro credenzial (username e password)    "(svolto)"
 - Gli utenti possono recuperare credenziali (password) oppure recupero credenziali (username)     "(svolto)"
-- Gli utenti possono effettuare transazioni di deposito e prelievo nel loro portafoglio virtuale    "(ci sto lavorando)"
-- Gli utenti possono effettuare scommesse sulla Formula 1.
-- gestione delle scommesse (poter annullare le scommesse, visualizzarle)
-- Gli amministratori possono gestire le quote per le varie gare di Formula 1.
-- I risultati delle simulazioni delle gare sono visualizzabili dagli utenti.
+- Gli utenti possono effettuare transazioni di deposito e prelievo nel loro portafoglio virtuale    "(svolto)"
+- Gli utenti possono effettuare scommesse sulla Formula 1. ("svolto")
+
 
 
 ## come far partire il progetto
@@ -22,7 +20,8 @@ target: centri scommesse di piccole dimensioni
 
 step3: incollare il seguente link nel terminale e aspettare che finisca di installare le estensioni docker run --name myXampp -p 41061:22 -p 41062:80 -d -v /workspaces/betterF1:/www tomsik68/xampp:8
 
-step4: aprire l'estensione docker, aprire la sezione CONTAINERS, aprire l'eventuale se presente Individual Containers, e far partire il tutto cliccando con il tasto destro del mouse start su  tomsik68/xampp:8.  possiamo capire che è partito perche prima di tomsik68/xampp:8 apparirà un triangolo verde.se apparirà un traingolo verde cliccare di nuovo con il tasto destro open in browser su tomsik68/xampp:8. invece se apparirà invece un quadrato rosso significa che non è partito, quindi rifare la procedura per farlo partire.
+step4: aprire l'estensione docker, aprire la sezione CONTAINERS, aprire l'eventuale se presente Individual Containers, e far partire il tutto cliccando con il tasto destro del mouse start su  tomsik68/xampp:8.  cliccare  su  tomsik68/xampp:8 con il tasto destro e selezionale  open in browser.  
+
 step5: se clicclando  su open in browser ti apparirà l'immagine di defoult di xampp allora significa che funziona tutto
 
 step6: cliccare su phpMyAdmin
@@ -33,14 +32,15 @@ step8:dublicare la pagina
 
 step9: andare nell'URL ed cambiare /phpmyadmin/ con /www/
 
-step10: appariranno tanti file, cliccare su Index.php partirà il mio progettino
+
 
 
 
 
 ## schema e/r
+![er](https://github.com/nicolabresciani/betterF1/assets/101709282/fb8bea79-39d7-478f-b3b8-5a19399ea5be)
 
-![schema er](https://github.com/nicolabresciani/betterF1/assets/101709282/2c85723c-8dd0-4f4b-96e7-99deadd29bee)
+
 
 
 ## schema relazionale
