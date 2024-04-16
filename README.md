@@ -38,7 +38,8 @@ step9: andare nell'URL ed cambiare /phpmyadmin/ con /www/
 
 
 ## schema e/r
-![er](https://github.com/nicolabresciani/betterF1/assets/101709282/fb8bea79-39d7-478f-b3b8-5a19399ea5be)
+
+![er](https://github.com/nicolabresciani/betterF1/assets/101709282/a2ad5dc0-c726-4014-aa03-e1512023751b)
 
 
 
