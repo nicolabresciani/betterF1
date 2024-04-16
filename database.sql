@@ -65,13 +65,6 @@ CREATE TABLE Scommessa (
     FOREIGN KEY (Amministratore_Username) REFERENCES Amministratore(Username)
 );
 
-CREATE TABLE ScommessaQuota (
-    Scommessa_Id VARCHAR(10),
-    Quota_Id DECIMAL(10,2),
-    PRIMARY KEY (Scommessa_Id, Quota_Id),
-    FOREIGN KEY (Scommessa_Id) REFERENCES Scommessa(Id_Scommessa)
-);
-
 CREATE TABLE Carrello (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Scommessa_Id VARCHAR(10),

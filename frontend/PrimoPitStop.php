@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Migliore del gruppo</title>
+<title>Primo Pit-Stop</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -69,8 +69,9 @@
 </style>
 </head>
 <body>
+
 <div class="container">
-    <h1>Migliore del gruppo</h1>
+    <h1>Primo Pit-Stop</h1>
 
     <table>
         <thead>
@@ -81,50 +82,49 @@
             </tr>
         </thead>
         <tbody>
-        <?php
-                // Nomi dei piloti
-                $piloti = array(
-                    "Max Verstappen", "Sergio Perez", "Charles Leclerc", "Carlos Sainz", "Lewis Hamilton",
-                    "George Russell", "Lando Norris", "Oscar Piastri", "Lance Stroll", "Fernando Alonso",
-                    "Pierre Gasly", "Esteban Ocon", "Logan Sargeant", "Alexander Albon", "Yuki Tsunoda",
-                    "Daniel Ricciardo", "Zhou Guanyu", "Valtteri Bottas", "Nico Hulkenberg", "Kevin Magnussen"
-                );
+            <?php
+            // Nomi dei piloti
+            $piloti = array("Max Verstappen", "Sergio Perez", "Charles Leclerc", "Carlos Sainz", "Lewis Hamilton", 
+                            "George Russell","Lando Norris", "Oscar Piastri", "Lance Stroll", "Fernando Alonso", 
+                            "Pierre Gasly", "Esteban Ocon", "Logan Sargeant", "Alexander Albon", "Yuki Tsunoda",
+                            "Daniel Ricciardo", "Zhou Guanyu", "Valtteri Bottas","Nico Hulkenberg", "Kevin Magnussen");
 
-                // Calcolo delle quote per la colonna del "Si"
-                $quote_si = array();
-                for ($i = 0; $i < count($piloti); $i++) {
-                    if ($i < 10) { // Abbassiamo le quote per i primi 10 piloti
-                        $quote_si[] = round(1 + log($i + 2, count($piloti)) * 49 * 0.38, 2);
-                    } else {
-                        $quote_si[] = round(1 + log($i + 2, count($piloti)) * 49 * 0.68, 2);
-                    }
+            // Calcolo delle quote per la colonna del "Si"
+            $quote_si = array();
+            for ($i = 0; $i < count($piloti); $i++) {
+                if ($i < 10) { // Abbassiamo le quote per i primi 5 piloti
+                    $quote_si[] = round(1 + log($i + 2, count($piloti)) * 49 * 0.38, 2); // Applica uno sconto del 10% e un fattore di 20
+                } else {
+                    $quote_si[] = round(1 + log($i + 2, count($piloti)) * 49 * 0.68, 2); // Manteniamo le quote più alte per i piloti successivi
                 }
+            }
+            
+            
 
-                // Calcolo delle quote per la colonna del "No"
-                $quote_no = array();
-                $numero_piloti = count($piloti);
-                for ($i = 0; $i < $numero_piloti; $i++) {
-                    if ($i >= 10) { // Aumentiamo le quote per i piloti dal decimo in poi
-                        $quote_no[] = round(1 + log($numero_piloti - $i + 1, $numero_piloti) * 49 * 0.34, 2);
-                    } else {
-                        $quote_no[] = round(50 - log($i + 2, $numero_piloti) * 49 * 0.8, 2);
-                    }
+            // Calcolo delle quote per la colonna del "No"
+            $quote_no = array();
+            $numero_piloti = count($piloti);
+            for ($i = 0; $i < $numero_piloti; $i++) {
+                if ($i >= 10) { // Aumentiamo le quote per i piloti dal decimo al ventesimo posto
+                    $quote_no[] = round(1 + log($numero_piloti - $i + 1, $numero_piloti) * 49 * 0.34, 2); // Applica uno sconto del 10%
+                } else {
+                    $quote_no[] = round(50 - log($i + 2, $numero_piloti) * 49 * 0.8, 2); // Manteniamo le quote invariate per i primi nove piloti
                 }
-                // Stampa dei piloti e input per le quote dei pulsanti Si/No
-                for ($i = 0; $i < count($piloti); $i += 2) {
-                    echo "<tr>";
-                    echo "<td>{$piloti[$i]} - {$piloti[$i + 1]}</td>";
-                    echo "<td><button class='si-button' data-pilota='{$piloti[$i]}' data-quote='{$quote_si[$i]}' data-scelta='SI'>{$quote_si[$i]}</button></td>";
-                    echo "<td><button class='no-button' data-pilota='{$piloti[$i]}' data-quote='{$quote_no[$i]}' data-scelta='NO'>{$quote_no[$i]}</button></td>";
-                    echo "</tr>";
-                }
-
-            ?>
+            }
+            // Stampa dei piloti e input per le quote dei pulsanti Si/No
+            for ($i = 0; $i < count($piloti); $i++) {
+                echo "<tr>";
+                echo "<td>$piloti[$i]</td>";
+                echo "<td><button class='si-button' data-pilota='$piloti[$i]' data-quote='$quote_si[$i]' data-scelta='SI'>$quote_si[$i]</button></td>";
+                echo "<td><button class='no-button' data-pilota='$piloti[$i]' data-quote='$quote_no[$i]' data-scelta='NO'>$quote_no[$i]</button></td>";
+                echo "</tr>";
+            }
+            ?> 
         </tbody>
     </table>
+
     <a href="../frontend/Home.php" class="home-link">Torna alla pagina Home</a>
 </div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -139,7 +139,7 @@
 
             // Crea una richiesta AJAX
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '../backend/salva_quotaMiglioreDelGruppo.php', true);
+            xhr.open('POST', '../backend/salva_quotaPrimoPitStop.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             // Gestione della risposta AJAX
