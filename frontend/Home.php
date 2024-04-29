@@ -117,6 +117,9 @@
         <form action="../frontend/Logout.php" method="post">
             <button type="submit">Logout</button>
         </form>
+        <form action="../frontend/StoricoScommesse.php" method="post">
+            <button type="submit">Storico Scommesse</button>
+        </form>
         <form action="../frontend/Carello.php" method="post">
             <button type="submit">Carello</button>
         </form>
