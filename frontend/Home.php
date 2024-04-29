@@ -63,6 +63,7 @@
             right: 50px; /* Sposta l'immagine leggermente più a destra */
         }
 
+
     </style>
 </head>
 <body>
@@ -152,7 +153,7 @@
         <button type="submit">primo pit-stop</button>
     </form>
 </div>
-
+<!--
 <div>
     <button onclick="startTimer()">Avvia Simulazione</button>
     <div id="timer"></div>
@@ -188,6 +189,6 @@
         }, 1000); // Esegui la funzione ogni secondo
     }
 </script>
-
+-->
 </body>
 </html>
