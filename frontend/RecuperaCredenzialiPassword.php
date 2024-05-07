@@ -7,24 +7,43 @@
     
 </head>
 <body>
-    <form method="post" action="../backend/RecuperaCredenzialiPasswordController.php">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required>
+    <form method="post" action="../backend/CambiaPassword.php">
+        <label for="Mail">Mail:</label>
+        <input type="text" id="Mail" name="email" required> 
         <br>
-        <label for="Nome">Nome:</label>
-        <input type="text" name="Nome" required>
-        <br>
-        <label for="Cognome">Cognome:</label>
-        <input type="text" name="Cognome" required>
-        <br>
-        <label for="Cellulare">Cellulare:</label>
-        <input type="text" name="Cellulare" maxlength="10" required>
-        <br>
-        <label for="Password">Inserire nuova password:</label>
-        <input type="password" name="Password" required><br>
-        <label for="ConfermaPassword">Conferma nuova password:</label>
-        <input type="password" name="ConfermaPassword" required><br>
-        <input type="submit" value="Registra nuova password">
+        <input type="submit" id="Submit">
     </form>
+    <script>
+        let valoreMail = document.getElementById("Mail");
+        let valoreSubmit = document.getElementById("Submit");
+
+
+        valoreSubmit.addEventListener("click", (e) => {
+            e.preventDefault();
+            const email = valoreMail.value;
+            if (!email) return;
+            
+            // Invia l'email al backend per la verifica
+            fetch('../backend/CambiaPassword.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.success) {
+                    //alert("La mail esiste !"); 
+                } else {
+                    //alert("La mail non esiste "); 
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+            });
+        });
+    </script>
 </body>
 </html>

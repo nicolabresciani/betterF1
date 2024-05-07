@@ -15,8 +15,7 @@ if ($conn->connect_error) {
 
 // Funzione per validare l'email
 function validaEmail($email) {
-    return strpos($email, '@') !== false
-        && (strpos($email, '.it') !== false || strpos($email, '.com') !== false);
+    return strpos($email, '@') !== false;
 }
 
 // Funzione per validare il numero di telefono (10 cifre)

@@ -19,6 +19,7 @@ CREATE TABLE Utente (
     Mail VARCHAR(255),
     Ruolo VARCHAR(20),
     CodiceValidazione INT(6),
+    PasswordResentToken VARCHAR(255),
     Stato ENUM('attivo', 'sospeso') DEFAULT 'attivo'
 );
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storico Scommesse</title>
     <style>
-        body {
+         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
@@ -20,10 +20,11 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            max-width: 800px;
             width: 100%;
             overflow-y: auto;
             position: relative; /* Per il posizionamento assoluto */
+            max-width: 800px; /* Limite massimo per il contenitore */
+            margin: auto; /* Centra il contenitore orizzontalmente */
         }
         h1 {
             text-align: center;
@@ -75,6 +76,31 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+        }
+        /* Stile per i pulsanti "Seleziona Data" */
+        .select-date-button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .select-date-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Stili per rendere responsive */
+        @media screen and (max-width: 600px) {
+            /* Riduci il padding del corpo e del contenitore */
+            body, .container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
