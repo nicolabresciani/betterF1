@@ -2,7 +2,6 @@
     header("Content-Type: application/json");
     require 'vendor/autoload.php';
 
-    use Resend\Resend;
 
     $servername = "localhost";
     $username = "root";
@@ -22,26 +21,18 @@
     $taken = $currentDate->format('Y-m-d H:i:s');
 
 
-    $resend = new Resend('re_STonAqFr_EgaJNcgXzHVcqn6ZD7M7P52m');
 
     // Construct the link with the unique code
     $link = "http://localhost:41062/reset-passowrd.php?token=" . $taken;
 
     // Send the email using Resend
+    $resend = Resend::client('re_STonAqFr_EgaJNcgXzHVcqn6ZD7M7P52m');
+
     $resend->emails->send([
-        'from' => 'Acme <onboarding@resend.dev>',
-        'to' => [$email], // Use the email obtained from the frontend
-        'subject' => 'Reset Password Link',
-        'text' => 'Here is your reset password link: ' . $link,
-        'headers' => [
-            'X-Entity-Ref-ID' => '123456789',
-        ],
-        'tags' => [
-            [
-                'name' => 'category',
-                'value' => 'reset_password',
-            ],
-        ],
+      'from' => 'onboarding@resend.dev',
+      'to' => 'delivered@resend.dev',
+      'subject' => 'Hello World',
+      'html' => '<strong>it works!</strong>',
     ]);
 
 
