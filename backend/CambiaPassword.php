@@ -28,6 +28,7 @@
     // Send the email using Resend
     $resend = Resend::client('re_STonAqFr_EgaJNcgXzHVcqn6ZD7M7P52m');
 
+
     $resend->emails->send([
       'from' => 'onboarding@resend.dev',
       'to' => 'delivered@resend.dev',
