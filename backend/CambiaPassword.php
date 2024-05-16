@@ -1,65 +1,91 @@
 <?php
-    header("Content-Type: application/json");
-    require 'vendor/autoload.php';
+header("Content-Type: application/json");
+require 'vendor/autoload.php';
 
+use SendGrid\Mail\Mail;
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "betterF1";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "betterF1";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// Funzione per inviare email
+function sendEmail($to, $from, $subject, $body) {
+    $email = new Mail();
+    $email->setFrom($from);
+    $email->setSubject($subject);
+    $email->addTo($to);
+    $email->addContent("text/plain", $body);
+    
+    $sendgrid = new \SendGrid('YOUR_SENDGRID_API_KEY'); // Inserisci qui la tua chiave API di SendGrid
 
-    // Controllo della connessione
-    if ($conn->connect_error) {
-        die("Connessione fallita: " . $conn->connect_error);
+    try {
+        $response = $sendgrid->send($email);
+        if ($response->statusCode() >= 200 && $response->statusCode() < 300) {
+            return true;
+        } else {
+            error_log('SendGrid error: ' . $response->body());
+            return false;
+        }
+    } catch (Exception $e) {
+        error_log('Caught exception: '. $e->getMessage());
+        return false;
     }
-    // Create a DateTime object representing the current date and time
-    $currentDate = new DateTime();
+}
 
-    // Convert the DateTime object to a string
-    $taken = $currentDate->format('Y-m-d H:i:s');
+// Funzione per generare un token
+function generateToken() {
+    return bin2hex(random_bytes(50));
+}
 
+// Connessione al database
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    echo json_encode(['success' => false, 'message' => 'Database connection failed: ' . $conn->connect_error]);
+    exit();
+}
 
+// Lettura e decodifica dei dati JSON
+$json = file_get_contents('php://input');
+$dati = json_decode($json, true);
 
-    // Construct the link with the unique code
-    $link = "http://localhost:41062/reset-passowrd.php?token=" . $taken;
+if (!isset($dati['email'])) {
+    echo json_encode(['success' => false, 'message' => 'Email is required']);
+    exit();
+}
 
-    // Send the email using Resend
-    $resend = Resend::client('re_STonAqFr_EgaJNcgXzHVcqn6ZD7M7P52m');
+$email = $conn->real_escape_string($dati['email']);
 
+// Preparazione e esecuzione della query
+$stmt = $conn->prepare("SELECT * FROM Utente WHERE Mail = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    $resend->emails->send([
-      'from' => 'onboarding@resend.dev',
-      'to' => 'delivered@resend.dev',
-      'subject' => 'Hello World',
-      'html' => '<strong>it works!</strong>',
-    ]);
+if ($result && $result->num_rows > 0) {
+    $token = generateToken();
+    $link = "http://localhost:41062/reset-password.php?token=" . $token;
 
+    // Aggiornamento del token nel database
+    $stmt = $conn->prepare("UPDATE Utente SET PasswordResentToken = ? WHERE Mail = ?");
+    $stmt->bind_param("ss", $token, $email);
+    $stmt->execute();
 
-    // Ottieni l'email inviata dal frontend
-    $json = file_get_contents('php://input');
-    $dati = json_decode($json, true);
-    $email = $dati['email'];
+    // Invia l'email di reimpostazione della password
+    $subject = 'Reimposta la tua password';
+    $body = "Clicca sul seguente link per reimpostare la tua password: " . $link;
+    $from = 'mittente@example.com'; // Utilizza un'email valida del mittente, non l'email dell'utente
 
-    // Query per aggiornare il campo PasswordResentToken nel database
-    $sql = "SELECT * FROM Utente WHERE Mail = '$email'";
-
-    $result = $conn->query($sql);
-
-    // Controlla se l'aggiornamento nel database è avvenuto con successo
-    if ($result && $result->num_rows > 0) {
-        $sql = "UPDATE Utente SET PasswordResentToken = '$taken' WHERE Mail = '$email'";
-        $conn->query($sql);
-        $response = array('success' => true);
+    if (sendEmail($email, $from, $subject, $body)) {
+        $response = ['success' => true, 'message' => 'Email inviata con successo'];
     } else {
-        $response = array('success' => false);
+        $response = ['success' => false, 'message' => 'Errore durante l\'invio dell\'email'];
     }
-    echo json_encode($response);
+} else {
+    $response = ['success' => false, 'message' => 'Utente non trovato'];
+}
 
-
-
-    // Chiudi la connessione al database
-    $conn->close();
-exit(); // Assicura che il processo PHP termini qui
+echo json_encode($response);
+$conn->close();
+exit();
 ?>

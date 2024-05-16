@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cambia Password</title>
-    
 </head>
 <body>
     <form method="post" action="../backend/CambiaPassword.php">
@@ -16,7 +15,6 @@
     <script>
         let valoreMail = document.getElementById("Mail");
         let valoreSubmit = document.getElementById("Submit");
-
 
         valoreSubmit.addEventListener("click", (e) => {
             e.preventDefault();
@@ -35,9 +33,9 @@
             .then(data => {
                 console.log(data);
                 if (data.success) {
-                    //alert("La mail esiste !"); 
+                    alert("La mail esiste !");
                 } else {
-                    //alert("La mail non esiste "); 
+                    alert("La mail non esiste ");
                 }
             })
             .catch(error => {
