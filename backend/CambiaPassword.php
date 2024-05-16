@@ -67,19 +67,24 @@ if ($result && $result->num_rows > 0) {
     $link = "http://localhost:41062/reset-password.php?token=" . $token;
 
     // Aggiornamento del token nel database
-    $stmt = $conn->prepare("UPDATE Utente SET PasswordResentToken = ? WHERE Mail = ?");
+    $stmt = $conn->prepare("UPDATE Utente SET PasswordResetToken = ? WHERE Mail = ?");
     $stmt->bind_param("ss", $token, $email);
     $stmt->execute();
 
-    // Invia l'email di reimpostazione della password
-    $subject = 'Reimposta la tua password';
-    $body = "Clicca sul seguente link per reimpostare la tua password: " . $link;
-    $from = 'mittente@example.com'; // Utilizza un'email valida del mittente, non l'email dell'utente
+    // Verifica se l'aggiornamento è andato a buon fine
+    if ($stmt->affected_rows > 0) {
+        // Invia l'email di reimpostazione della password
+        $subject = 'Reimposta la tua password';
+        $body = "Clicca sul seguente link per reimpostare la tua password: " . $link;
+        $from = 'mittente@example.com'; // Utilizza un'email valida del mittente, non l'email dell'utente
 
-    if (sendEmail($email, $from, $subject, $body)) {
-        $response = ['success' => true, 'message' => 'Email inviata con successo'];
+        if (sendEmail($email, $from, $subject, $body)) {
+            $response = ['success' => true, 'message' => 'Email inviata con successo'];
+        } else {
+            $response = ['success' => false, 'message' => 'Errore durante l\'invio dell\'email'];
+        }
     } else {
-        $response = ['success' => false, 'message' => 'Errore durante l\'invio dell\'email'];
+        $response = ['success' => false, 'message' => 'Errore durante l\'aggiornamento del token'];
     }
 } else {
     $response = ['success' => false, 'message' => 'Utente non trovato'];

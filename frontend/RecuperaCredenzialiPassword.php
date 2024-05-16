@@ -6,21 +6,18 @@
     <title>Cambia Password</title>
 </head>
 <body>
-    <form method="post" action="../backend/CambiaPassword.php">
+    <form id="passwordForm">
         <label for="Mail">Mail:</label>
-        <input type="text" id="Mail" name="email" required> 
+        <input type="email" id="Mail" name="email" required> 
         <br>
-        <input type="submit" id="Submit">
+        <input type="submit" id="Submit" value="Invia">
     </form>
     <script>
-        let valoreMail = document.getElementById("Mail");
-        let valoreSubmit = document.getElementById("Submit");
-
-        valoreSubmit.addEventListener("click", (e) => {
+        document.getElementById('passwordForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = valoreMail.value;
+            const email = document.getElementById("Mail").value;
             if (!email) return;
-            
+
             // Invia l'email al backend per la verifica
             fetch('../backend/CambiaPassword.php', {
                 method: 'POST',
@@ -33,9 +30,9 @@
             .then(data => {
                 console.log(data);
                 if (data.success) {
-                    alert("La mail esiste !");
+                    alert(data.message);
                 } else {
-                    alert("La mail non esiste ");
+                    alert(data.message);
                 }
             })
             .catch(error => {
