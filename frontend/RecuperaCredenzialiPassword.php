@@ -9,7 +9,6 @@
     <form id="passwordForm">
         <label for="Mail">Mail:</label>
         <input type="email" id="Mail" name="email" required> 
-        <br>
         <input type="submit" id="Submit" value="Invia">
     </form>
     <script>
@@ -17,14 +16,15 @@
             e.preventDefault();
             const email = document.getElementById("Mail").value;
             if (!email) return;
-
+            console.log( JSON.stringify({ email: email }));
             // Invia l'email al backend per la verifica
             fetch('../backend/CambiaPassword.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email }),
+                body: JSON.stringify({ email: email })
+
             })
             .then(response => response.json())
             .then(data => {
@@ -37,6 +37,7 @@
             })
             .catch(error => {
                 console.error('Errore:', error);
+                
             });
         });
     </script>

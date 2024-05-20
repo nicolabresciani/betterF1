@@ -1,8 +1,8 @@
 <?php
-header("Content-Type: application/json");
-require 'vendor/autoload.php';
+//var_dump ($_POST);
 
-use SendGrid\Mail\Mail;
+header("Content-Type: application/json");
+require '../vendor/autoload.php';
 
 $servername = "localhost";
 $username = "root";
@@ -11,25 +11,17 @@ $dbname = "betterF1";
 
 // Funzione per inviare email
 function sendEmail($to, $from, $subject, $body) {
-    $email = new Mail();
-    $email->setFrom($from);
-    $email->setSubject($subject);
-    $email->addTo($to);
-    $email->addContent("text/plain", $body);
-    
-    $sendgrid = new \SendGrid('YOUR_SENDGRID_API_KEY'); // Inserisci qui la tua chiave API di SendGrid
-
+    $resend = Resend::client('re_STonAqFr_EgaJNcgXzHVcqn6ZD7M7P52m');
     try {
-        $response = $sendgrid->send($email);
-        if ($response->statusCode() >= 200 && $response->statusCode() < 300) {
-            return true;
-        } else {
-            error_log('SendGrid error: ' . $response->body());
-            return false;
-        }
-    } catch (Exception $e) {
-        error_log('Caught exception: '. $e->getMessage());
-        return false;
+        $result = $resend->sendEmail([
+            'id' => 'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1', // ID della campagna
+            'to' => $to,
+            'from' => $from,
+            'subject' => $subject,
+            'text' => $body
+        ]);
+    } catch (\Exception $e) {
+        exit('Error: ' . $e->getMessage());
     }
 }
 
@@ -46,8 +38,11 @@ if ($conn->connect_error) {
 }
 
 // Lettura e decodifica dei dati JSON
-$json = file_get_contents('php://input');
-$dati = json_decode($json, true);
+$post_data = file_get_contents('php://input');
+//$dati = json_decode($post_data, true);
+$dati['email'] = 'nicolabresciani321@gmail.com';
+
+$email = $dati['email'];
 
 if (!isset($dati['email'])) {
     echo json_encode(['success' => false, 'message' => 'Email is required']);
@@ -76,7 +71,7 @@ if ($result && $result->num_rows > 0) {
         // Invia l'email di reimpostazione della password
         $subject = 'Reimposta la tua password';
         $body = "Clicca sul seguente link per reimpostare la tua password: " . $link;
-        $from = 'mittente@example.com'; // Utilizza un'email valida del mittente, non l'email dell'utente
+        $from = $email; // Utilizza un'email valida del mittente, non l'email dell'utente
 
         if (sendEmail($email, $from, $subject, $body)) {
             $response = ['success' => true, 'message' => 'Email inviata con successo'];
