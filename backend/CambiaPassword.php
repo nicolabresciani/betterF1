@@ -1,6 +1,7 @@
 <?php
 //var_dump ($_POST);
 
+use resend\resend;
 header("Content-Type: application/json");
 require '../vendor/autoload.php';
 
@@ -13,13 +14,21 @@ $dbname = "betterF1";
 function sendEmail($to, $from, $subject, $body) {
     $resend = Resend::client('re_STonAqFr_EgaJNcgXzHVcqn6ZD7M7P52m');
     try {
-        $result = $resend->sendEmail([
+        /*$result = $resend->sendEmail([
             'id' => 'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1', // ID della campagna
             'to' => $to,
             'from' => $from,
             'subject' => $subject,
             'text' => $body
+        ]);*/
+        
+        $resend->emails->send([
+            "from" => $from,
+            "to" => $to,
+            "subject" => $subject,
+            "text" => $body
         ]);
+
     } catch (\Exception $e) {
         exit('Error: ' . $e->getMessage());
     }
@@ -39,10 +48,12 @@ if ($conn->connect_error) {
 
 // Lettura e decodifica dei dati JSON
 $post_data = file_get_contents('php://input');
-//$dati = json_decode($post_data, true);
-$dati['email'] = 'nicolabresciani321@gmail.com';
+if (!$post_data) {
+    echo json_encode(['success' => false, 'message' => 'Input mancante.']);
+    exit();
+}
 
-$email = $dati['email'];
+$dati = json_decode($post_data, true);
 
 if (!isset($dati['email'])) {
     echo json_encode(['success' => false, 'message' => 'Email is required']);
@@ -73,7 +84,7 @@ if ($result && $result->num_rows > 0) {
         $body = "Clicca sul seguente link per reimpostare la tua password: " . $link;
         $from = $email; // Utilizza un'email valida del mittente, non l'email dell'utente
 
-        if (sendEmail($email, $from, $subject, $body)) {
+        if (sendEmail('onboarding@resend.dev', $from, $subject, $body)) {
             $response = ['success' => true, 'message' => 'Email inviata con successo'];
         } else {
             $response = ['success' => false, 'message' => 'Errore durante l\'invio dell\'email'];
@@ -84,6 +95,8 @@ if ($result && $result->num_rows > 0) {
 } else {
     $response = ['success' => false, 'message' => 'Utente non trovato'];
 }
+
+//echo "{email : 'bresciani.nicola.studente@itispaleocapa.it'}";
 
 echo json_encode($response);
 $conn->close();

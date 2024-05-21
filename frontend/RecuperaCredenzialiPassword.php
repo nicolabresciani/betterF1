@@ -16,29 +16,23 @@
             e.preventDefault();
             const email = document.getElementById("Mail").value;
             if (!email) return;
-            console.log( JSON.stringify({ email: email }));
             // Invia l'email al backend per la verifica
-            fetch('../backend/CambiaPassword.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email })
-
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if (data.success) {
-                    alert(data.message);
-                } else {
-                    alert(data.message);
+            async function sendEmail(email) {
+                try {
+                    const response = await fetch('../backend/CambiaPassword.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: "{\"email\": " + email + "}" // JSON.stringify({ email: email })
+                    })
+                    let r = response.json();
+                    console.log(r.then((data) => console.log(data)));
+                } catch (error) {
+                    console.error(error);
                 }
-            })
-            .catch(error => {
-                console.error('Errore:', error);
-                
-            });
+            }
+            sendEmail(email);
         });
     </script>
 </body>
