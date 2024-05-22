@@ -8,32 +8,34 @@
             body {
                 margin: 0;
                 padding: 0;
-                font-family: cursive, sans-serif;
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4; /* sfondo cambiato in grigio chiaro */
             }
 
             header,.header {
-                background-color: blue;
+                background-color: #333;
                 padding: 10px;
                 display: flex;
                 color:white;
-                justify-content: space-between;
+                justify-content: center;
                 align-items: center;
             }
 
             h1 {
                 text-align: center;
+                color: #333;
             }
 
-            form {
+            .header {
                 text-align: center;
                 margin-top: 20px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: center; /* centra i pulsanti orizzontalmente */
                 align-items: center;
             }
 
             button {
-                background-color: black;
+                background-color: #4CAF50;
                 color: white;
                 padding: 10px 20px;
                 border: none;
@@ -41,14 +43,10 @@
                 cursor: pointer;
                 transition: background-color 0.3s;
                 margin-right: 5px; 
-                float: right; /* aggiunto */
             }
             button:hover {
-                background-color: black;
+                background-color: #45a049;
             }
-
-
-
         </style>
     </head> 
     <body> 
