@@ -30,6 +30,9 @@ function verificaAutenticitaSottoAmministratore($conn, $username, $password) {
     return $result->num_rows > 0;
 }
 
+// Start the session
+session_start();
+
 // Connessione al database 
 $servername = "localhost";
 $username = "root";
@@ -51,9 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $auth_result = verificaAutenticitaUtente($conn, $username, $password);
     if ($auth_result === true) {
         // Inizializza la sessione
-        session_start();
-
-        // Memorizza l'username nella sessione
         $_SESSION["username"] = $username;
         $_SESSION["password"] = $password;
 
@@ -62,9 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } elseif (verificaAutenticitaSottoAmministratore($conn, $username, $password)) {
         // Inizializza la sessione
-        session_start();
-
-        // Memorizza l'username nella sessione
         $_SESSION["username"] = $username;
         $_SESSION["password"] = $password;
 
@@ -72,12 +69,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../frontend/PaginaSottoAmministratore.php");
         exit();
     } elseif ($auth_result === "sospeso") {
-        echo "Account attualmente sospeso";
+        $_SESSION["error"] = "Account attualmente sospeso";
+        header("Location: ../frontend/Login.php");
+        exit();
     } else {
-        echo "Errore: Nome utente o password non validi.";
+        $_SESSION["error"] = "Errore: Nome utente o password non validi.";
+        header("Location: ../frontend/Login.php");
+        exit();
     }
 }
 
 // Chiudi connessione database
 $conn->close();
-?>

@@ -54,6 +54,11 @@
             background-color: #0056b3;
         }
 
+        .error {
+            color: red;
+            margin-bottom: 15px;
+        }
+
         a {
             color: #007bff;
             text-decoration: none;
@@ -66,6 +71,13 @@
 </head>
 <body>
     <form method="post" action="../backend/LoginController.php">
+        <?php
+        session_start();
+        if (isset($_SESSION["error"])) {
+            echo '<div class="error">' . $_SESSION["error"] . '</div>';
+            unset($_SESSION["error"]);
+        }
+        ?>
         <label for="username">Username:</label>
         <input type="text" name="username" required>
         <br>
@@ -74,8 +86,6 @@
         <br>
         <input type="submit" value="Login"><br>
         <a href="../frontend/RecuperaCredenzialiPassword.php">Hai dimenticato la password ?</a>
-        
-
     </form>
 </body>
 </html>
